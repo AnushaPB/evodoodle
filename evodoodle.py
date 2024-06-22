@@ -214,7 +214,7 @@ def plot_PCA(mod, ax=None):
 def map_PCA(mod, lyr_num=0, mask=True, ax=None):
     if lyr_num is None:
         lyr_num = 0
-        
+
     from copy import deepcopy
     from sklearn.decomposition import PCA
     cmaps = {0: plt.cm.RdBu.copy(), 1: plt.cm.BrBG_r.copy()}
@@ -276,6 +276,11 @@ def plot_pca(mod):
 
 # Function for plotting heterozygosity
 def plot_popgen(mod, lyr_num=None):
+
+    # Get layer numbers
+    if isinstance(lyr_num, int):
+        (lyr_num, lyr_num, lyr_num)
+
     # Create a GridSpec object
     gs = gridspec.GridSpec(1, 4, width_ratios=[1, 1, 1.2, 1.2])  # Adjust the width ratios to give more space to the heterozygosity plot
 
@@ -298,13 +303,13 @@ def plot_popgen(mod, lyr_num=None):
     plot_PCA(mod, ax=ax1)
 
     # Plot the PCA map on the second subplot
-    map_PCA(mod, lyr_num=lyr_num, mask=False, ax=ax2)
+    map_PCA(mod, lyr_num=lyr_num[0], mask=False, ax=ax2)
 
     # Plot the heterozygosity on the third subplot
-    plot_heterozygosity(mod, lyr_num=lyr_num, ax=ax3)
+    plot_heterozygosity(mod, lyr_num=lyr_num[1], ax=ax3)
 
     # Plot the phenotype on the fourth subplot
-    plot_phenotype(mod, trait=0, lyr_num=lyr_num, ax=ax4)
+    plot_phenotype(mod, trait=0, lyr_num=lyr_num[2], ax=ax4)
 
     # Display the figure
     plt.tight_layout()
@@ -386,10 +391,10 @@ def plot_phenotype(mod, trait=0, lyr_num=2, ax=None):
         fig, ax = plt.subplots(figsize=(6, 6), dpi=80, facecolor='w', edgecolor='k')
 
     # Plot the layer as the background
-    ax.pcolormesh(mod.land._x_cell_bds, mod.land._y_cell_bds, layer, cmap=cmap, vmax=1, vmin=0)
+    ax.pcolormesh(mod.land._x_cell_bds, mod.land._y_cell_bds, layer, cmap=cmap, vmin=0, vmax=1)
 
     # Create a scatter plot of individuals, colored by phenotype
-    scatter = ax.scatter(xs, ys, c=zs, edgecolors='black', cmap=cmap)
+    scatter = ax.scatter(xs, ys, c=zs, edgecolors='black', cmap=cmap, vmin=0, vmax=1)
 
     # Set the colorbar with a label
     plt.colorbar(scatter, ax=ax)
