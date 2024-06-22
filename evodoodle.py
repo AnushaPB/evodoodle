@@ -22,10 +22,11 @@ def edit_landscape(landscape):
     value_to_color = {0: BLACK, 0.5: GRAY, 1: WHITE}
     
     # Convert the 2D landscape array back to a 3D drawing matrix
-    drawing_matrix = np.array([[[value_to_color.get(landscape[i, j], BLACK) for _ in range(3)] for j in range(landscape.shape[1])] for i in range(landscape.shape[0])])
+    drawing_matrix = np.array([[value_to_color.get(landscape[i, j], BLACK) for j in range(landscape.shape[1])] for i in range(landscape.shape[0])])
     
     # Edit the landscape
     landscape = draw_landscape_helper(d=landscape.shape[0], drawing_matrix=drawing_matrix)
+    
     return landscape
     
 # Helper function to draw a landscape
@@ -147,6 +148,31 @@ def draw_landscape_helper(d=10, drawing_matrix=None):
     # Return the drawing matrix
     return landscape
 
+# Plot the landscapes
+def plot_landscapes(population_size, connectivity, environment):
+    # Create a figure and a set of subplots
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(12, 4))
+
+    # Set titles for each subplot
+    ax1.set_title('Population Size')
+    ax2.set_title('Connectivity')
+    ax3.set_title('Environment')
+
+    # Define a colormap that uses the seaborn "crest" color palette
+    cmap = sns.cubehelix_palette(start=.5, rot=-.5, as_cmap=True, reverse=True)
+
+    # Display the matrices
+    im1 = ax1.imshow(population_size, cmap=cmap, vmin=0, vmax=1)
+    im2 = ax2.imshow(connectivity, cmap=cmap, vmin=0, vmax=1)
+    im3 = ax3.imshow(environment, cmap=cmap, vmin=0, vmax=1)
+
+    # Add a colorbar
+    fig.colorbar(im1, ax=ax1)
+    fig.colorbar(im2, ax=ax2)
+    fig.colorbar(im3, ax=ax3)
+
+    plt.show()
+
 # Update the parameters with the custom landscapes
 def set_landscapes(params, population_size, connectivity, environment):    
     params['landscape']['main']['dim'] = population_size.shape
@@ -186,6 +212,9 @@ def plot_PCA(mod, ax=None):
 
 # function for running and plotting genetic PCA
 def map_PCA(mod, lyr_num=0, mask=True, ax=None):
+    if lyr_num is None:
+        lyr_num = 0
+        
     from copy import deepcopy
     from sklearn.decomposition import PCA
     cmaps = {0: plt.cm.RdBu.copy(), 1: plt.cm.BrBG_r.copy()}
@@ -246,7 +275,7 @@ def plot_pca(mod):
     plt.show()
 
 # Function for plotting heterozygosity
-def plot_popgen(mod):
+def plot_popgen(mod, lyr_num=None):
     # Create a GridSpec object
     gs = gridspec.GridSpec(1, 4, width_ratios=[1, 1, 1.2, 1.2])  # Adjust the width ratios to give more space to the heterozygosity plot
 
@@ -269,13 +298,13 @@ def plot_popgen(mod):
     plot_PCA(mod, ax=ax1)
 
     # Plot the PCA map on the second subplot
-    map_PCA(mod, lyr_num=0, mask=False, ax=ax2)
+    map_PCA(mod, lyr_num=lyr_num, mask=False, ax=ax2)
 
     # Plot the heterozygosity on the third subplot
-    plot_heterozygosity(mod, lyr_num=0, ax=ax3)
+    plot_heterozygosity(mod, lyr_num=lyr_num, ax=ax3)
 
     # Plot the phenotype on the fourth subplot
-    plot_phenotype(mod, trait=0, lyr_num=2, ax=ax4)
+    plot_phenotype(mod, trait=0, lyr_num=lyr_num, ax=ax4)
 
     # Display the figure
     plt.tight_layout()
@@ -283,6 +312,9 @@ def plot_popgen(mod):
 
 # Function for plotting genetic diversity
 def plot_heterozygosity(mod, lyr_num=0, ax=None):
+    if lyr_num is None:
+        lyr_num = 0
+
     # Calculate heterozygosity
     genotypes = mod.comm[0]._get_genotypes()
     heterozygosity = calculate_heterozygosity(genotypes)
@@ -335,6 +367,9 @@ def calculate_heterozygosity(genotypes):
 
 # Plot the phenotype of a trait
 def plot_phenotype(mod, trait=0, lyr_num=2, ax=None):
+    if lyr_num is None:
+        lyr_num = 2
+
     # Get the phenotype of the trait
     zs = mod.comm[0]._get_z()[:, trait]
     xs = mod.comm[0]._get_x()
