@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns 
 import geonomics as gnx
-from functions import make_landscapes, edit_landscapes, init_mod, draw_landscape, plot_popgen
+from evodoodle import make_landscapes, edit_landscapes, init_mod, draw_landscape, plot_popgen
 from gnx_params import params
 import geonomics as gnx
 
