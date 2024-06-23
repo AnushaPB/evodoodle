@@ -277,6 +277,9 @@ def plot_pca(mod):
 # Function for plotting heterozygosity
 def plot_popgen(mod, lyr_num=None):
 
+    if lyr_num is None:
+        lyr_num = (0, 1, 2)
+
     # Get layer numbers
     if isinstance(lyr_num, int):
         (lyr_num, lyr_num, lyr_num)
