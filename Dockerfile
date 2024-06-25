@@ -4,9 +4,9 @@ FROM python:3.9
 # Set the working directory
 WORKDIR /workspace
 
-# Install system dependencies
+# Install system dependencies for pygame
+USER root
 RUN apt-get update && apt-get install -y \
-    build-essential \
     libsdl2-dev \
     libsdl2-image-dev \
     libsdl2-mixer-dev \
@@ -20,14 +20,14 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Switch back to jovyan user to avoid permission issues
+USER ${NB_UID}
+
 # Install Python packages
 RUN pip install numpy matplotlib seaborn geonomics pygame
-
-# Install Jupyter
-RUN pip install jupyter
 
 # Expose port 8888 for Jupyter Notebook
 EXPOSE 8888
 
 # Set the default command to run Jupyter Notebook
-CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
+CMD ["start-notebook.sh", "--NotebookApp.token=''"]
