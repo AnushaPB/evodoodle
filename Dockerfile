@@ -5,7 +5,6 @@ FROM python:3.9
 WORKDIR /workspace
 
 # Install system dependencies for pygame
-USER root
 RUN apt-get update && apt-get install -y \
     libsdl2-dev \
     libsdl2-image-dev \
@@ -20,9 +19,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Switch back to jovyan user to avoid permission issues
-USER ${NB_UID}
-
 # Install Python packages
 RUN pip install numpy matplotlib seaborn geonomics pygame
 
@@ -30,4 +26,4 @@ RUN pip install numpy matplotlib seaborn geonomics pygame
 EXPOSE 8888
 
 # Set the default command to run Jupyter Notebook
-CMD ["start-notebook.sh", "--NotebookApp.token=''"]
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
