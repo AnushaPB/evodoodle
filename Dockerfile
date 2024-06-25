@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Python packages
+RUN pip install numpy matplotlib seaborn geonomics pygame
+
 # Install Jupyter
 RUN pip install jupyter
 
