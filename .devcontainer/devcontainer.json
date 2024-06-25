@@ -1,0 +1,14 @@
+{
+  "name": "Python Jupyter Dev Container",
+  "dockerFile": "Dockerfile",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-toolsai.jupyter"
+  ],
+  "postCreateCommand": "pip install numpy matplotlib seaborn geonomics pygame",
+  "forwardPorts": [8888],
+  "remoteUser": "vscode"
+}
