@@ -9,5 +9,5 @@
     "ms-toolsai.jupyter"
   ],
   "forwardPorts": [8888],
-  "remoteUser": "root"
+  "remoteUser": "vscode"
 }
