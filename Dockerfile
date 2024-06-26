@@ -23,8 +23,9 @@ RUN apt-get update && apt-get install -y \
 # Install Python packages
 RUN pip install geopandas rasterio matplotlib scipy bitarray tskit scikit-learn statsmodels msprime psutil nlmpy numpy matplotlib seaborn geonomics pygame ipykernel
 
-# Expose port 8888 for Jupyter Notebook
+# Expose port 8888 for Jupyter Notebook and 5901 for VNC
 EXPOSE 8888
+EXPOSE 5901
 
 # Set the default command to run Jupyter Notebook
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
