@@ -9,5 +9,8 @@
     "ms-toolsai.jupyter"
   ],
   "forwardPorts": [8888],
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  }
 }
