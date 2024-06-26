@@ -4,7 +4,8 @@ FROM python:3.9
 # Set the working directory
 WORKDIR /workspace
 
-# Install system dependencies for pygame and desktop-lite
+# Install system dependencies for pygame
+USER root
 RUN apt-get update && apt-get install -y \
     libsdl2-dev \
     libsdl2-image-dev \
@@ -16,20 +17,17 @@ RUN apt-get update && apt-get install -y \
     libswscale-dev \
     libjpeg-dev \
     zlib1g-dev \
-    libgdal-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Switch back to jovyan user to avoid permission issues
+USER ${NB_UID}
+
 # Install Python packages
-RUN pip install geopandas rasterio matplotlib scipy bitarray tskit scikit-learn statsmodels msprime psutil nlmpy numpy matplotlib seaborn geonomics pygame ipykernel
+RUN pip install numpy matplotlib seaborn geonomics pygame
 
-# Set the user
-USER jovyan
-
-# Expose port 8888 for Jupyter Notebook and 5901 for VNC
+# Expose port 8888 for Jupyter Notebook
 EXPOSE 8888
-EXPOSE 5901
-EXPOSE 6080
 
 # Set the default command to run Jupyter Notebook
-CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
+CMD ["start-notebook.sh", "--NotebookApp.token=''"]
