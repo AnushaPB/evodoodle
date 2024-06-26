@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     libswscale-dev \
     libjpeg-dev \
     zlib1g-dev \
+    libgdal-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -24,7 +25,7 @@ RUN apt-get update && apt-get install -y \
 USER ${NB_UID}
 
 # Install Python packages
-RUN pip install numpy matplotlib seaborn geonomics pygame
+RUN pip install geopandas rasterio matplotlib scipy bitarray tskit scikit-learn statsmodels msprime psutil nlmpy numpy matplotlib seaborn geonomics pygame ipykernel
 
 # Expose port 8888 for Jupyter Notebook
 EXPOSE 8888
