@@ -4,7 +4,7 @@ FROM python:3.9
 # Set the working directory
 WORKDIR /workspace
 
-# Install system dependencies for pygame and Xvfb
+# Install system dependencies for pygame and desktop-lite
 RUN apt-get update && apt-get install -y \
     libsdl2-dev \
     libsdl2-image-dev \
@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     zlib1g-dev \
     libgdal-dev \
-    xvfb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -28,4 +27,4 @@ RUN pip install geopandas rasterio matplotlib scipy bitarray tskit scikit-learn 
 EXPOSE 8888
 
 # Set the default command to run Jupyter Notebook
-CMD ["xvfb-run", "-s", "-screen 0 1400x900x24", "jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
