@@ -1,5 +1,5 @@
 # Use the official Python image as a parent image
-FROM python:latest
+FROM python:3.12.4
 
 # Set the working directory
 WORKDIR /workspace
