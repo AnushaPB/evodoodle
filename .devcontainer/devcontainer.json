@@ -8,14 +8,6 @@
     "ms-python.python",
     "ms-toolsai.jupyter"
   ],
-  "forwardPorts": [8888, 6080],
-  "portsAttributes": {
-    "6080": {
-      "label": "desktop"
-    }
-  },
+  "forwardPorts": [8888],
   "remoteUser": "vscode",
-  "features": {
-    "ghcr.io/devcontainers/features/desktop-lite:1": {}
-  }
 }
