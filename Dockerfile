@@ -23,6 +23,9 @@ RUN apt-get update && apt-get install -y \
 # Install Python packages
 RUN pip install geopandas rasterio matplotlib scipy bitarray tskit scikit-learn statsmodels msprime psutil nlmpy numpy matplotlib seaborn geonomics pygame ipykernel
 
+# Set the user to vscode
+USER vscode
+
 # Expose port 8888 for Jupyter Notebook and 5901 for VNC
 EXPOSE 8888
 EXPOSE 5901
