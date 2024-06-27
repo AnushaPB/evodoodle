@@ -1,5 +1,5 @@
 {
-  "name": "Python Jupyter Dev Container",
+  "name": "Evodoodle Container",
   "image": "ghcr.io/anushapb/evodoodle:latest",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
