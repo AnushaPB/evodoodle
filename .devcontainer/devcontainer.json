@@ -1,0 +1,14 @@
+{
+  "image": "ghcr.io/anushapb/evodoodle:latest",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "jupyter.notebookFileRoot": "/workspace" // Set the root directory for Jupyter notebooks
+  },
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "extensions": [
+    "ms-python.python",
+    "ms-toolsai.jupyter"
+  ],
+  "workingDir": "/workspace"
+}
