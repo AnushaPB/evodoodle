@@ -26,9 +26,9 @@ Or use the Docker image:
 ```
 
 If you are using [Visual Studio Code](https://code.visualstudio.com/) and have [Docker](https://code.visualstudio.com/docs/devcontainers/containers) installed on your computer, this repository is set-up so that you can open it within a container with everything ready-to-go. In VS Code:
-1. Install the Dev Containers extension
-3. Open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P).
-4. Type "Remote-Containers: Open Folder in Container..." and select it
+1. Install the `Dev Containers` extension
+3. Open the Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`).
+4. Type `"Remote-Containers: Open Folder in Container..."` and select it
 5. Navigate to and select the evodoodle folder
 For more detail instructions see [here](https://code.visualstudio.com/docs/devcontainers/containers). 
 
