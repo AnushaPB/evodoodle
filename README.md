@@ -25,7 +25,7 @@ Or use the Docker image:
  docker pull ghcr.io/anushapb/evodoodle:latest
 ```
 
-If you are using [Visual Studio Code](https://code.visualstudio.com/) and have [Docker](https://code.visualstudio.com/docs/devcontainers/containers) installed on your computer, this repository is set-up so that you can open it within a container with everything ready-to-go. In VS Code:
+If you are using [Visual Studio Code](https://code.visualstudio.com/) and have [Docker](https://code.visualstudio.com/docs/devcontainers/containers) installed on your computer, this repository is set-up so that you can open it within a container with everything ready-to-go. First, clone or download this repository. Then, in VS Code:
 
 1. Install the `Dev Containers` extension
 3. Open the Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`).
