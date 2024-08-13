@@ -1,8 +1,9 @@
-# Evodoodle
+# Evodoodle <img src="images/evodoodle_logo.png" align="right" height="150"/>
+
 
 Draw your own custom landscapes and watch as your species evolves across them! Evodoodle is a drawing game for learning how evolution plays out across landscapes. Evodoodle allows you to control population density, connectivity, and selection across space and then simulates evolution using Geonomics, a powerful landscape genomic simulation package.
 
-<img src="example.png" alt="example" width="100%">
+<img src="images/example.png" alt="example" width="100%">
 
 
 # Setup
@@ -41,7 +42,7 @@ For more detail instructions see [here](https://code.visualstudio.com/docs/devco
 
 To start evodoodle, simply run the following code. Whenever `draw_landscape()` is run a pop-up will appear that allows you to draw on a landscape. Once you have drawn your landscape, click `SAVE` and the code will continue:
 
-<img src="drawingapp.png" alt="drawingapp" width="30%">
+<img src="images/drawingapp.png" alt="drawingapp" width="30%">
 
 <br>
 
