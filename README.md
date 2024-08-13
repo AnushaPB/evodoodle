@@ -2,6 +2,9 @@
 
 Draw your own custom landscapes and watch as your species evolves across them! Evodoodle is a drawing game for learning how evolution plays out across landscapes. Evodoodle allows you to control population density, connectivity, and selection across space and then simulates evolution using Geonomics, a powerful landscape genomic simulation package.
 
+<img src="example.png" alt="example" width="100%">
+
+
 # Setup
 
 First, clone or download this repository. Once inside the evodoodle directory, you can then use the [evodoodle.yml](evodoodle.yml) file to set-up a conda environment and install the required packages
@@ -17,11 +20,16 @@ pip install numpy
 pip install matplotlib
 pip install seaborn
 pip install geonomics
+pip install pygame
 ```
 
 # Quick start
 
 To start evodoodle, simply run the following code. Whenever `draw_landscape()` is run a pop-up will appear that allows you to draw on a landscape. Once you have drawn your landscape, click `SAVE` and the code will continue:
+
+<img src="drawingapp.png" alt="drawingapp" width="30%">
+
+<br>
 
 ```python
 import matplotlib.pyplot as plt
