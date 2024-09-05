@@ -10,5 +10,9 @@
     "ms-python.python",
     "ms-toolsai.jupyter"
   ],
-  "workingDir": "/workspace"
+  "workingDir": "/workspace",
+  "runArgs": [
+    "-e", "DISPLAY=unix${DISPLAY}",
+    "-v", "/tmp/.X11-unix:/tmp/.X11-unix"
+  ]
 }

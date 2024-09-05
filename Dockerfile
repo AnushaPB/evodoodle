@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     libgdal-dev \
     libgsl-dev \
+    x11-apps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
