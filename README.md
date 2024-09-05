@@ -1,14 +1,11 @@
-# Evodoodle <img src="images/evodoodle_logo.png" align="right" height="150"/>
+# Evodoodle <img src="images/evodoodle_logo.png" align="right" height="250"/>
 
 
 Draw your own custom landscapes and watch as your species evolves across them! Evodoodle is a drawing game for learning how evolution plays out across landscapes. Evodoodle allows you to control population density, connectivity, and selection across space and then simulates evolution using Geonomics, a powerful landscape genomic simulation package.
 
-<img src="images/example.png" alt="example" width="100%">
-
-
 # Setup
 
-First, clone or download this repository. Once inside the evodoodle directory, you can then use the [evodoodle.yml](evodoodle.yml) file to set-up a conda environment and install the required packages
+First, clone or download this repository by clicking the green CODE button. Once inside the evodoodle directory, you can then use the [evodoodle.yml](evodoodle.yml) file to set-up a conda environment and install the required packages
 
 ```bash
 conda env create -f evodoodle.yml
@@ -74,5 +71,7 @@ plot_popgen(mod)
 
 # From here you can continue to run the model for more steps and plot the results
 ```
+
+<img src="images/example.png" alt="example" width="100%">
 
 For a more in-depth walkthrough and some fun challenges, check out the [evodoodle_notebook.ipynb](evodoodle_notebook.ipynb) jupyter notebook
