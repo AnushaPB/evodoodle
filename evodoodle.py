@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import geonomics as gnx
 import pygame
+from matplotlib.colors import LinearSegmentedColormap
+import stats as gnxstats
 
 # Draw a landscape
 def draw_landscape(d=10):
@@ -186,7 +188,7 @@ def init_mod(params, population_size, connectivity, environment):
     # Add our custom matrices to the geonomics parameters
     params = set_landscapes(params, population_size, connectivity, environment)
     # Make our params dict into a proper Geonomics ParamsDict object
-    params = gnx.make_params_dict(params, 'demo')
+    params = gnx.make_params_dict(params, 'geonomics_output')
     # Then use it to make a model
     mod = gnx.make_model(parameters=params, verbose=True)
     # Burn in the model for 10000 steps
@@ -217,7 +219,11 @@ def map_PCA(mod, lyr_num=0, mask=True, ax=None):
 
     from copy import deepcopy
     from sklearn.decomposition import PCA
-    cmaps = {0: plt.cm.RdBu.copy(), 1: plt.cm.BrBG_r.copy()}
+    # Define the colormaps without .copy()
+    cmaps = {
+        0: LinearSegmentedColormap.from_list("RdBu_copy", plt.cm.RdBu(np.linspace(0, 1, 256))),
+        1: LinearSegmentedColormap.from_list("BrBG_r_copy", plt.cm.BrBG_r(np.linspace(0, 1, 256)))
+    }
     mark_size = 60
     figsize = 8
     species = mod.comm[0]
@@ -514,3 +520,87 @@ def edit_landscapes(population_size, connectivity, environment, binary=False):
     plt.show()
 
     return population_size, connectivity, environment
+
+
+# EVODOODLE ADDITIONS ------------------------------------------------------------------------------
+import matplotlib.pyplot as plt
+import numpy as np
+def get_stats(mod):
+    spp = mod.comm[0]
+    Nt = gnxstats._calc_Nt(spp)
+    het = gnxstats._calc_het(spp, mean=True)
+    mean_fit = gnxstats._calc_mean_fitness(spp)
+    t = spp.t
+
+    data = {
+        'Nt': Nt,
+        'Heterozygosity': het,
+        'Mean Fitness': mean_fit,
+        'Time': t
+    }
+    
+    return data
+
+def update_stats(mod, stats_dict):
+    new_stats = get_stats(mod)
+    for key, value in new_stats.items():
+        stats_dict[key].append(value)
+    return stats_dict
+
+def stats_walk(mod, t=100, inc=10):
+    # Initialize stats dictionary
+    stats_dict = {
+        'Nt': [],
+        'Heterozygosity': [],
+        'Mean Fitness': [],
+        'Time': []
+    }
+
+    # Perform initial calculation
+    update_stats(mod, stats_dict)
+    
+    # Calculate how many iterations to run
+    its = inc%t
+    
+    # Walk and update stats
+    for _ in range(10):  # Adjust the range as needed
+        mod.walk(10)
+        update_stats(mod, stats_dict)
+
+    # Now `stats_dict` contains the updated statistics after each walk
+    return stats_dict
+
+
+def plot_stats(stats):
+    # Extract data
+    time = stats['Time']
+    nt = stats['Nt']
+    het = stats['Heterozygosity']
+    mean_fit = stats['Mean Fitness']
+
+    # Create subplots
+    fig, axs = plt.subplots(3, 1, figsize=(10, 15))
+
+    # Plot Nt over time
+    axs[0].plot(time, nt, marker='o', linestyle='-', color='b')
+    axs[0].set_title('Nt over Time')
+    axs[0].set_xlabel('Time')
+    axs[0].set_ylabel('Nt')
+
+    # Plot Heterozygosity over time
+    axs[1].plot(time, het, marker='o', linestyle='-', color='g')
+    axs[1].set_title('Heterozygosity over Time')
+    axs[1].set_xlabel('Time')
+    axs[1].set_ylabel('Heterozygosity')
+
+    # Plot Mean Fitness over time
+    axs[2].plot(time, mean_fit, marker='o', linestyle='-', color='r')
+    axs[2].set_title('Mean Fitness over Time')
+    axs[2].set_xlabel('Time')
+    axs[2].set_ylabel('Mean Fitness')
+
+    # Adjust layout
+    plt.tight_layout()
+
+    # Show plots
+    plt.show()
