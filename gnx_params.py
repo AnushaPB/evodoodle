@@ -205,7 +205,7 @@ params = {
 ########################################################
 # CONSIDER CHANGING THIS PARAMETER                     #
                     #radius of mate-search area        #   
-                    'mating_radius':            4,    #
+                    'mating_radius':            4,     #
 ########################################################            
                     
                     }, # <END> 'mating'
@@ -275,11 +275,11 @@ params = {
                     #num of loci
                     'L':                        10000,
                     #starting allele frequency (None to draw freqs randomly)
-                    'start_p_fixed':            0.5,
+                    'start_p_fixed':            None,
                     #whether to start neutral locus freqs at 0
-                    'start_neut_zero':          True,
+                    'start_neut_zero':          False,
                     #genome-wide per-base neutral mut rate (0 to disable)
-                    'mu_neut':                  1e-7, # CHANGED FROM 1e-9
+                    'mu_neut':                  1e-9, # CHANGED FROM 1e-9
                     #genome-wide per-base deleterious mut rate (0 to disable)
                     'mu_delet':                 0,
                     #shape of distr of deleterious effect sizes
@@ -380,33 +380,6 @@ params = {
         'burn_T':       30,
         #seed number
         'num':          None,
-        
-        
-        # -----------------------------------#
-        # --- data-collection parameters ---#
-        # -----------------------------------#
-        'data': {
-            'sampling': {
-                # sampling scheme {'all', 'random', 'point', 'transect'}
-                'scheme': 'all',
-                # when to collect data
-                'when': 99,
-                # whether to save current Layers when data is collected
-                'include_landscape': False,
-                # whether to include fixed loci in VCF files
-                'include_fixed_sites': True,
-            },
-            'format': {
-                # format for genetic data {'vcf', 'fasta'}
-                'gen_format': 'vcf',
-                # format for vector geodata {'csv', 'shapefile', 'geojson'}
-                'geo_vect_format': 'csv',
-                # format for raster geodata {'geotiff', 'txt'}
-                'geo_rast_format': 'geotiff',
-                #format for files containing non-neutral loci
-                'nonneut_loc_format':      'csv',
-            },
-        },  # <END> 'data'
 
         #-----------------------------#
         #--- iterations parameters ---#
@@ -423,49 +396,6 @@ params = {
             #whether to burn in each iteration
             'repeat_burn':      False,
             }, # <END> 'iterations'
-        
-        # -----------------------------------#
-        # --- stats-collection parameters ---#
-        # -----------------------------------#
-        'stats': {
-            # number of individs at time t
-            'Nt': {
-                # whether to calculate
-                'calc': True,
-                # calculation frequency (in timesteps)
-                'freq': 1,
-            },
-            # heterozgosity
-            'het': {
-                # whether to calculate
-                'calc': True,
-                # calculation frequency (in timesteps)
-                'freq': 10,
-                # whether to mean across sampled individs
-                'mean': False,
-            },
-            # minor allele freq
-            'maf': {
-                # whether to calculate
-                'calc': True,
-                # calculation frequency (in timesteps)
-                'freq': 10,
-            },
-            # mean fitness
-            'mean_fit': {
-                # whether to calculate
-                'calc': True,
-                # calculation frequency (in timesteps)
-                'freq': 10,
-            },
-            # linkage disequilibirum
-            'ld': {
-                # whether to calculate
-                'calc': False,
-                # calculation frequency (in timesteps)
-                'freq': 100,
-            },
-        },  # <END> 'stats'
 
         } # <END> 'model'
 

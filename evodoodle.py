@@ -522,9 +522,10 @@ def edit_landscapes(population_size, connectivity, environment, binary=False):
     return population_size, connectivity, environment
 
 
-# EVODOODLE ADDITIONS ------------------------------------------------------------------------------
+# STATS ------------------------------------------------------------------------------
 import matplotlib.pyplot as plt
 import numpy as np
+import stats as gnxstats
 def get_stats(mod):
     spp = mod.comm[0]
     Nt = gnxstats._calc_Nt(spp)
@@ -560,11 +561,11 @@ def stats_walk(mod, t=100, inc=10):
     update_stats(mod, stats_dict)
     
     # Calculate how many iterations to run
-    its = inc%t
+    its = t//inc
     
     # Walk and update stats
-    for _ in range(10):  # Adjust the range as needed
-        mod.walk(10)
+    for _ in range(its):  # Adjust the range as needed
+        mod.walk(inc)
         update_stats(mod, stats_dict)
 
     # Now `stats_dict` contains the updated statistics after each walk
@@ -604,3 +605,14 @@ def plot_stats(stats):
 
     # Show plots
     plt.show()
+    
+def change_param(params, name, new_value):
+    params['comm']['species']['spp_0']['init']['K_factor'] = new_value
+    params['comm']['species']['spp_0']['movement']['movement_distance_distr_param2'] = new_value
+    params['comm']['species']['spp_0']['movement']['dispersal_distance_distr_param2'] = new_value
+    params['comm']['species']['spp_0']['gen_arch']['traits']['trait_0']['phi'] = new_value
+    params['comm']['species']['spp_0']['gen_arch']['traits']['trait_0']['n_loci'] = new_value
+    params['comm']['species']['spp_0']['gen_arch']['L'] = new_value
+    params['comm']['species']['spp_0']['gen_arch']['mu_neut'] = new_value
+    
+    
