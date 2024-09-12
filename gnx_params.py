@@ -271,7 +271,7 @@ params = {
 
                 'gen_arch': {
                     #file defining custom genomic arch
-                    'gen_arch_file':            None,
+                    'gen_arch_file':            "genomic_architecture.csv",
                     #num of loci
                     'L':                        10000,
                     #starting allele frequency (None to draw freqs randomly)
@@ -279,7 +279,7 @@ params = {
                     #whether to start neutral locus freqs at 0
                     'start_neut_zero':          False,
                     #genome-wide per-base neutral mut rate (0 to disable)
-                    'mu_neut':                  1e-9, # CHANGED FROM 1e-9
+                    'mu_neut':                  1e-9, 
                     #genome-wide per-base deleterious mut rate (0 to disable)
                     'mu_delet':                 0,
                     #shape of distr of deleterious effect sizes
@@ -327,14 +327,14 @@ params = {
 #################################################################
 # CONSIDER CHANGING THESE PARAMETERS                            #
                             #polygenic selection coefficient    #
-                            'phi':                  0.05,       # 
+                            'phi':                  0.1,        # 
                             #number of loci underlying trait    #
-                            'n_loci':               1,          #
+                            'n_loci':               4,         #
 #################################################################
                             #mutation rate at loci underlying trait
                             'mu':                   0,
                             #mean of distr of effect sizes
-                            'alpha_distr_mu' :      0.1,
+                            'alpha_distr_mu' :      0.25,
                             #variance of distr of effect size
                             'alpha_distr_sigma':    0,
                             #max allowed magnitude for an alpha value
