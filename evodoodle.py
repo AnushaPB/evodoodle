@@ -615,4 +615,57 @@ def change_param(params, name, new_value):
     params['comm']['species']['spp_0']['gen_arch']['L'] = new_value
     params['comm']['species']['spp_0']['gen_arch']['mu_neut'] = new_value
     
+import matplotlib.pyplot as plt
+
+def plot_multistats(multiple_stats):
+    """
+    Plots multiple statistics dictionaries on the same set of subplots.
+    
+    Parameters:
+    multiple_stats (dict): A dictionary of statistics dictionaries. 
+                           Keys are labels for the lines, values are stats dictionaries.
+    """
+    # Create subplots
+    fig, axs = plt.subplots(3, 1, figsize=(10, 15))
+
+    # Loop through each stats dictionary and its label
+    for label, stats in multiple_stats.items():
+        # Extract data
+        time = stats['Time']
+        nt = stats['Nt']
+        het = stats['Heterozygosity']
+        mean_fit = stats['Mean Fitness']
+
+        # Plot Nt over time
+        axs[0].plot(time, nt, marker='o', linestyle='-', label=label)
+        
+        # Plot Heterozygosity over time
+        axs[1].plot(time, het, marker='o', linestyle='-', label=label)
+        
+        # Plot Mean Fitness over time
+        axs[2].plot(time, mean_fit, marker='o', linestyle='-', label=label)
+
+    # Set titles and labels
+    axs[0].set_title('Nt over Time')
+    axs[0].set_xlabel('Time')
+    axs[0].set_ylabel('Nt')
+    axs[0].legend()
+
+    axs[1].set_title('Heterozygosity over Time')
+    axs[1].set_xlabel('Time')
+    axs[1].set_ylabel('Heterozygosity')
+    axs[1].legend()
+
+    axs[2].set_title('Mean Fitness over Time')
+    axs[2].set_xlabel('Time')
+    axs[2].set_ylabel('Mean Fitness')
+    axs[2].legend()
+
+    # Adjust layout
+    plt.tight_layout()
+
+    # Show plots
+    plt.show()
+
+    
     
