@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
 USER ${NB_UID}
 
 # Configure Mamba to use the conda-forge channel and install packages
-RUN micromamba install -y -n base -c conda-forge msprime geopandas rasterio bitarray statsmodels pip && \
+RUN micromamba install -y -n base -c conda-forge msprime geopandas rasterio bitarray statsmodels psutil pip && \
     micromamba clean --all --yes
 
 # Activate the base environment and install additional Python packages using pip
