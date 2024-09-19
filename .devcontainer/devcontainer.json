@@ -17,7 +17,8 @@
   "portsAttributes": {
     "6080": {
       "label": "desktop"
-    },
+    }
+  },
   "runArgs": ["--init", "--shm-size=1g"],
   "postCreateCommand": "git clone https://github.com/your-username/your-repository.git /workspaces",
   "extensions": [
