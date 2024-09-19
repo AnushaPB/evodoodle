@@ -26,7 +26,10 @@ RUN apt-get update && apt-get install -y \
 # Switch back to jovyan user to avoid permission issues
 USER ${NB_UID}
 
-# Install Python packages
+# Configure Conda to use the classic solver
+RUN conda config --set solver classic
+
+# Add conda-forge channel and install packages
 RUN conda config --add channels conda-forge
 RUN conda install msprime -y
 RUN conda install geopandas -y
