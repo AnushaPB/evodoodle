@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y \
     libgdal-dev \
     libgsl-dev \
     x11-apps \
+    git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
