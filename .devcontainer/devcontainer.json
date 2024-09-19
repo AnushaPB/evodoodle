@@ -2,12 +2,24 @@
   "name": "Evodoodle Container",
   "image": "ghcr.io/anushapb/evodoodle:latest",
   "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash"
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "jupyter.notebookFileRoot": "/workspace"
   },
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "extensions": [
     "ms-python.python",
     "ms-toolsai.jupyter"
   ],
-  "forwardPorts": [8888],
-  "remoteUser": "root"
+  "workingDir": "/workspace",
+  "forwardPorts": [6080, 5901, 8888],
+  "features": {
+    "desktop-lite": {
+      "password": "vscode",
+      "webPort": "6080",
+      "vncPort": "5901"
+    }
+  },
+  "runArgs": ["--init", "--shm-size=1g"]
 }
+
