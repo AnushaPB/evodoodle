@@ -1,5 +1,5 @@
 # Use the official Python image as a parent image
-FROM python:3.12.4
+FROM continuumio/miniconda3:latest
 
 # Set the working directory
 WORKDIR /workspaces
@@ -27,7 +27,13 @@ RUN apt-get update && apt-get install -y \
 USER ${NB_UID}
 
 # Install Python packages
-RUN pip install geopandas rasterio matplotlib scipy bitarray tskit scikit-learn statsmodels msprime psutil nlmpy numpy matplotlib seaborn geonomics pygame ipykernel -U
+RUN conda config --add channels conda-forge
+RUN conda install msprime -y
+RUN conda install geopandas -y
+RUN conda install rasterio -y
+RUN conda install bitarray -y
+RUN pip install NLMpy -U
+RUN pip install geonomics -U
 
 # Expose port 8888 for Jupyter Notebook
 EXPOSE 8888
