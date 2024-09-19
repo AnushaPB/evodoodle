@@ -35,19 +35,17 @@ EXPOSE 8888
 # Set the default command to run Jupyter Notebook
 CMD ["start-notebook.sh", "--NotebookApp.token=''"]
 
-# Install Fluxbox and VNC server
-RUN apt-get update && apt-get install -y \
-    fluxbox \
-    tightvncserver \
-    x11vnc \
-    xvfb \
-    xterm
-
-
-# Configure Fluxbox
-RUN echo "exec fluxbox" > ~/.xinitrc
-
-# Set up VNC server
-EXPOSE 5900
-CMD ["sh", "-c", "tightvncserver :1 -geometry 1280x800 -depth 24 && tail -f /dev/null"]
+# From: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/desktop-lite.md
+COPY library-scripts/desktop-lite-debian.sh /tmp/library-scripts/
+RUN apt-get update && bash /tmp/library-scripts/desktop-lite-debian.sh
+ENV DBUS_SESSION_BUS_ADDRESS="autolaunch:" \
+    VNC_RESOLUTION="1440x768x16" \
+    VNC_DPI="96" \
+    VNC_PORT="5901" \
+    NOVNC_PORT="6080" \
+    DISPLAY=":1" \
+    LANG="en_US.UTF-8" \
+    LANGUAGE="en_US.UTF-8"
+ENTRYPOINT ["/usr/local/share/desktop-init.sh"]
+CMD ["sleep", "infinity"]
 
