@@ -13,6 +13,7 @@
     }
   },
   "forwardPorts": [6080, 5901, 8888],
-  "runArgs": ["--init", "--shm-size=1g"]
+  "runArgs": ["--init", "--shm-size=1g"],
+  "postCreateCommand": "git clone https://github.com/AnushaPB/evodoodle.git /workspace"
 }
 
