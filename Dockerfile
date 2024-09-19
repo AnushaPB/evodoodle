@@ -26,17 +26,15 @@ RUN apt-get update && apt-get install -y \
 # Switch back to jovyan user to avoid permission issues
 USER ${NB_UID}
 
-# Configure Conda to use the classic solver
-RUN conda config --set solver classic
+# Configure Conda to use the classic solver and add conda-forge channel
+RUN conda config --set solver classic && \
+    conda config --add channels conda-forge
 
-# Add conda-forge channel and install packages
-RUN conda config --add channels conda-forge
-RUN conda install msprime -y
-RUN conda install geopandas -y
-RUN conda install rasterio -y
-RUN conda install bitarray -y
-RUN pip install NLMpy -U
-RUN pip install geonomics -U
+# Install Conda packages in a single command
+RUN conda install -y msprime geopandas rasterio bitarray
+
+# Install additional Python packages using pip
+RUN pip install --upgrade NLMpy geonomics
 
 # Expose port 8888 for Jupyter Notebook
 EXPOSE 8888
