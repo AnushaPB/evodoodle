@@ -36,7 +36,7 @@ EXPOSE 8888
 CMD ["start-notebook.sh", "--NotebookApp.token=''"]
 
 # From: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/desktop-lite.md
-COPY library-scripts/desktop-lite-debian.sh /tmp/library-scripts/
+COPY.devcontainer/library-scripts/desktop-lite-debian.sh /tmp/library-scripts/
 RUN apt-get update && bash /tmp/library-scripts/desktop-lite-debian.sh
 ENV DBUS_SESSION_BUS_ADDRESS="autolaunch:" \
     VNC_RESOLUTION="1440x768x16" \
