@@ -31,8 +31,7 @@ RUN micromamba install -y -n base -c conda-forge msprime geopandas rasterio bita
     micromamba clean --all --yes
 
 # Activate the base environment and install additional Python packages using pip
-RUN /opt/conda/bin/conda init bash && \
-    echo "source activate base" > ~/.bashrc && \
+RUN echo "source /opt/conda/bin/activate base" >> ~/.bashrc && \
     /bin/bash -c "source ~/.bashrc && pip install --upgrade NLMpy geonomics"
 
 # Expose port 8888 for Jupyter Notebook
