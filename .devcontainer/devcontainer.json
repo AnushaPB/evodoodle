@@ -5,6 +5,7 @@
     "terminal.integrated.shell.linux": "/bin/bash",
     "jupyter.notebookFileRoot": "/workspaces/evodoodle",
     "python.pythonPath": "/opt/conda/bin/python",
+    "python.defaultInterpreterPath": "/opt/conda/bin/python",
     "jupyter.interactiveWindowMode": "perFile",
     "jupyter.askForKernelRestart": false,
     "jupyter.enablePlotViewer": true
