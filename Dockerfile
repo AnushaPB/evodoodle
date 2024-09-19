@@ -1,5 +1,5 @@
-# Use the official Python image as a parent image
-FROM continuumio/miniconda3:latest
+# Use the official Miniconda image as a parent image
+FROM mambaorg/micromamba:latest
 
 # Set the working directory
 WORKDIR /workspaces
@@ -26,12 +26,9 @@ RUN apt-get update && apt-get install -y \
 # Switch back to jovyan user to avoid permission issues
 USER ${NB_UID}
 
-# Configure Conda to use the classic solver and add conda-forge channel
-RUN conda config --set solver classic && \
-    conda config --add channels conda-forge
-
-# Install Conda packages in a single command
-RUN conda install -y msprime geopandas rasterio bitarray
+# Configure Mamba to use the conda-forge channel and install packages
+RUN micromamba install -y -n base -c conda-forge msprime geopandas rasterio bitarray && \
+    micromamba clean --all --yes
 
 # Install additional Python packages using pip
 RUN pip install --upgrade NLMpy geonomics
