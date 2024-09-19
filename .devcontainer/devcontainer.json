@@ -11,12 +11,14 @@
     "jupyter.enablePlotViewer": true
   },
   "features": {
-    "desktop-lite": {
-      "password": "vscode",
-      "webPort": "6080"
-    }
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
   },
   "forwardPorts": [6080],
+  "portsAttributes": {
+    "6080": {
+      "label": "desktop"
+    }
+  },
   "runArgs": ["--init", "--shm-size=1g"],
   "postCreateCommand": "git clone https://github.com/your-username/your-repository.git /workspaces",
   "extensions": [

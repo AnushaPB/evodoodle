@@ -10,7 +10,11 @@ import geonomics as gnx
 # %%
 # Draw landscapes
 population_size = draw_landscape(d = 10)
+
+# %%
 connectivity = draw_landscape(d = 10)
+
+# %%
 environment = draw_landscape(d = 10)
 
 # %%
