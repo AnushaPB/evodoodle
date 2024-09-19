@@ -277,9 +277,9 @@ params = {
                     #starting allele frequency (None to draw freqs randomly)
                     'start_p_fixed':            0.5,
                     #whether to start neutral locus freqs at 0
-                    'start_neut_zero':          True,
+                    'start_neut_zero':          False,
                     #genome-wide per-base neutral mut rate (0 to disable)
-                    'mu_neut':                  1e-7, # CHANGED FROM 1e-9
+                    'mu_neut':                  0, # CHANGED FROM 1e-9
                     #genome-wide per-base deleterious mut rate (0 to disable)
                     'mu_delet':                 0,
                     #shape of distr of deleterious effect sizes

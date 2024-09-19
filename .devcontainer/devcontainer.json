@@ -1,16 +1,26 @@
 {
+  "name": "Evodoodle Container",
   "image": "ghcr.io/anushapb/evodoodle:latest",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
-    "jupyter.notebookFileRoot": "/workspace"
+    "jupyter.notebookFileRoot": "/workspaces/evodoodle",
+    "python.pythonPath": "/opt/conda/bin/python",
+    "python.defaultInterpreterPath": "/opt/conda/bin/python",
+    "jupyter.interactiveWindowMode": "perFile",
+    "jupyter.askForKernelRestart": false,
+    "jupyter.enablePlotViewer": true
   },
-  "workspaceFolder": "/workspace",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "features": {
+    "desktop-lite": {
+      "password": "vscode",
+      "webPort": "6080"
+    }
+  },
+  "forwardPorts": [6080],
+  "runArgs": ["--init", "--shm-size=1g"],
+  "postCreateCommand": "git clone https://github.com/your-username/your-repository.git /workspaces",
   "extensions": [
     "ms-python.python",
     "ms-toolsai.jupyter"
-  ],
-  "workingDir": "/workspace",
-  "forwardPorts": [5900],
-  "remoteUser": "vscode"
+  ]
 }
