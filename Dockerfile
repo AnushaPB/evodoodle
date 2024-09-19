@@ -2,7 +2,7 @@
 FROM python:3.12.4
 
 # Set the working directory
-WORKDIR /workspace
+WORKDIR /workspaces
 
 # Install system dependencies for pygame
 USER root
@@ -49,3 +49,5 @@ ENV DBUS_SESSION_BUS_ADDRESS="autolaunch:" \
 ENTRYPOINT ["/usr/local/share/desktop-init.sh"]
 CMD ["sleep", "infinity"]
 
+# Switch back to the default user
+USER root

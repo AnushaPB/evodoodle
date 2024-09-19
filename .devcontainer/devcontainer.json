@@ -3,7 +3,7 @@
   "image": "ghcr.io/anushapb/evodoodle:latest",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
-    "jupyter.notebookFileRoot": "/workspace"
+    "jupyter.notebookFileRoot": "/workspaces"
   },
   "features": {
     "desktop-lite": {
@@ -14,6 +14,9 @@
   },
   "forwardPorts": [6080, 5901, 8888],
   "runArgs": ["--init", "--shm-size=1g"],
-  "postCreateCommand": "git clone https://github.com/AnushaPB/evodoodle.git /workspace"
+  "postCreateCommand": "git clone https://github.com/your-username/your-repository.git /workspaces",
+  "extensions": [
+    "ms-python.python",
+    "ms-toolsai.jupyter"
+  ]
 }
-
