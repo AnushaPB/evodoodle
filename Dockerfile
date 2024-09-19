@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     libgdal-dev \
     libgsl-dev \
+    x11-apps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -33,3 +34,20 @@ EXPOSE 8888
 
 # Set the default command to run Jupyter Notebook
 CMD ["start-notebook.sh", "--NotebookApp.token=''"]
+
+# Install Fluxbox and VNC server
+RUN apt-get update && apt-get install -y \
+    fluxbox \
+    tightvncserver \
+    x11vnc \
+    xvfb \
+    xterm
+
+
+# Configure Fluxbox
+RUN echo "exec fluxbox" > ~/.xinitrc
+
+# Set up VNC server
+EXPOSE 5900
+CMD ["sh", "-c", "tightvncserver :1 -geometry 1280x800 -depth 24 && tail -f /dev/null"]
+
