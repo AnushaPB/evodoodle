@@ -27,11 +27,11 @@ RUN apt-get update && apt-get install -y \
 USER ${NB_UID}
 
 # Configure Mamba to use the conda-forge channel and install packages
-RUN micromamba install -y -n base -c conda-forge msprime geopandas rasterio bitarray pip && \
+RUN micromamba install -y -n base -c conda-forge msprime geopandas rasterio bitarray statsmodels pip && \
     micromamba clean --all --yes
 
 # Activate the base environment and install additional Python packages using pip
-RUN echo "source /opt/conda/bin/activate base" >> ~/.bashrc && \
+RUN echo "micromamba activate base" >> ~/.bashrc && \
     /bin/bash -c "source ~/.bashrc && pip install --upgrade NLMpy geonomics"
 
 # Expose port 8888 for Jupyter Notebook
