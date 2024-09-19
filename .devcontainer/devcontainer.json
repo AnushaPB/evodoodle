@@ -12,11 +12,10 @@
   "features": {
     "desktop-lite": {
       "password": "vscode",
-      "webPort": "6080",
-      "vncPort": "5901"
+      "webPort": "6080"
     }
   },
-  "forwardPorts": [6080, 5901, 8888],
+  "forwardPorts": [6080],
   "runArgs": ["--init", "--shm-size=1g"],
   "postCreateCommand": "git clone https://github.com/your-username/your-repository.git /workspaces",
   "extensions": [
