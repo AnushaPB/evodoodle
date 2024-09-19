@@ -6,7 +6,7 @@ on:
     paths:
       - Dockerfile
       - .github/workflows/docker-image.yml
-    branches: [ "main" , "codespace", "codespace2" ]
+    branches: [ "main" , "codespace", "codespace2", "codespace-desktop"]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
 
