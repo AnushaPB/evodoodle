@@ -1,6 +1,9 @@
 # Use the official Miniconda image as a parent image
 FROM mambaorg/micromamba:latest
 
+# Create the working directory
+RUN mkdir -p /workspaces
+
 # Set the working directory
 WORKDIR /workspaces
 
