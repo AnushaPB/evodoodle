@@ -4,7 +4,15 @@ import numpy as np
 import seaborn as sns 
 import geonomics as gnx
 import evodoodle as evo
-from .gnx_params import params
+
+
+# Import example parameters
+# %%
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
+from gnx_params import params
+
 
 # 1. DRAW YOUR LANDSCAPE 
 
