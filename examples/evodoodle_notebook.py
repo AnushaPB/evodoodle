@@ -5,15 +5,6 @@ import seaborn as sns
 import geonomics as gnx
 import evodoodle as evo
 
-
-# Import example parameters
-# %%
-import sys
-import os
-sys.path.append(os.path.dirname(__file__))
-from gnx_params import params
-
-
 # 1. DRAW YOUR LANDSCAPE 
 
 # %%
@@ -50,6 +41,24 @@ np.savetxt('environment.csv', environment, delimiter=',')
 #environment = np.loadtxt('environment.csv', delimiter=',')
 
 # 2. PLAY OUT EVOLUTION ACROSS YOUR LANSCAPE
+
+# %%
+# To define the parameters of our model for Geonomics we need to have a parameters dictionary
+# Evodoodle comes with an example parameters dictionary to start with:
+params = evo.example_params()
+
+# %%
+# You can also create your own Geonomics parameters file by running gnx.make_parameters_file()
+# Here we call this file "example_parameters" and it will automatically be saved to our working directory
+gnx.make_parameters_file("example_parameters")
+# You can manually edit this file to change the simulation parameters, just note that the landscape layers will be overwritten when we create our custom landscapes, so best to leave that section of the parameters alone
+
+# You can then load your parameters python dictionary
+from example_parameters import params
+print(params)
+
+# But for now we will use the example parameters
+params = evo.example_params()
 
 # %%
 # Start model
