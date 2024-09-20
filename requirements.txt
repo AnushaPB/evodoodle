@@ -3,3 +3,11 @@ seaborn
 matplotlib
 geonomics
 pygame
+pandas 
+geopandas
+scipy 
+scikit-learn
+statsmodels 
+shapely
+bitarray
+rasterio
