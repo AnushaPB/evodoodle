@@ -1,3 +1,11 @@
+"""
+EvoDoodle: A package for evolutionary landscape modeling and visualization.
+
+This module provides functions for creating, editing, and visualizing
+evolutionary landscapes, as well as running and analyzing evolutionary
+simulations using the Geonomics package.
+"""
+
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -7,11 +15,33 @@ import pygame
 
 # Draw a landscape
 def draw_landscape(d=10):
-    landscape = draw_landscape_helper(d=d)
+    """
+    Draw a custom landscape. 
+    
+    This function opens a Pygame window where the user can draw a landscape by clicking and dragging the mouse. The landscape is represented as a grid of cells with different values that can be changed by clicking on them. Once you are done drawing, click the "SAVE" button.
+
+    Args:
+        d (int): The dimension of the landscape grid. Default is 10.
+
+    Returns:
+        numpy.ndarray: A 2D numpy array representing the drawn landscape.
+    """
+    landscape = _draw_landscape_helper(d=d)
     return landscape
 
 # Edit a landscape
 def edit_landscape(landscape):
+    """
+    Edit an existing landscape using a Pygame-based interface.
+
+    This function opens a Pygame window with the provided landscape loaded, allowing the user to modify it by clicking and dragging the mouse.
+
+    Args:
+        landscape (numpy.ndarray): A 2D numpy array representing the landscape to edit.
+
+    Returns:
+        numpy.ndarray: A 2D numpy array representing the edited landscape.
+    """
     # Colors
     cmap = sns.cubehelix_palette(start=.5, rot=-.5, as_cmap=True, reverse=True, light = 0.7) 
     BLACK = tuple((np.array(cmap(0.0)[:3]) * 255).astype(int))
@@ -25,12 +55,13 @@ def edit_landscape(landscape):
     drawing_matrix = np.array([[value_to_color.get(landscape[i, j], BLACK) for j in range(landscape.shape[1])] for i in range(landscape.shape[0])])
     
     # Edit the landscape
-    landscape = draw_landscape_helper(d=landscape.shape[0], drawing_matrix=drawing_matrix)
+    landscape = _draw_landscape_helper(d=landscape.shape[0], drawing_matrix=drawing_matrix)
     
     return landscape
     
 # Helper function to draw a landscape
-def draw_landscape_helper(d=10, drawing_matrix=None):
+def _draw_landscape_helper(d=10, drawing_matrix=None):
+    """Internal helper function for drawing landscapes."""
     # Initialize Pygame
     pygame.init()
 
@@ -150,6 +181,17 @@ def draw_landscape_helper(d=10, drawing_matrix=None):
 
 # Plot the landscapes
 def plot_landscapes(population_size, connectivity, environment):
+    """
+    Plot the three landscape matrices side by side.
+
+    Args:
+        population_size (numpy.ndarray): A 2D array representing the population size landscape.
+        connectivity (numpy.ndarray): A 2D array representing the connectivity landscape.
+        environment (numpy.ndarray): A 2D array representing the environmental landscape.
+
+    Returns:
+        None: This function displays the plot but does not return any value.
+    """
     # Create a figure and a set of subplots
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(12, 4))
 
@@ -175,6 +217,21 @@ def plot_landscapes(population_size, connectivity, environment):
 
 # Update the parameters with the custom landscapes
 def set_landscapes(params, population_size, connectivity, environment):    
+    """
+    Update the parameters with custom landscapes.
+
+    This function takes a parameter dictionary and three custom landscape matrices,
+    and updates the parameter dictionary with these landscapes.
+
+    Args:
+        params (dict): A dictionary of model parameters.
+        population_size (numpy.ndarray): A 2D array representing the population size landscape.
+        connectivity (numpy.ndarray): A 2D array representing the connectivity landscape.
+        environment (numpy.ndarray): A 2D array representing the environmental landscape.
+
+    Returns:
+        dict: The updated parameter dictionary.
+    """
     params['landscape']['main']['dim'] = population_size.shape
     params['landscape']['layers']['population_size']['init']['defined']['rast'] = population_size
     params['landscape']['layers']['connectivity']['init']['defined']['rast'] = connectivity
@@ -183,6 +240,21 @@ def set_landscapes(params, population_size, connectivity, environment):
 
 # Initialize the model with the custom landscapes
 def init_mod(params, population_size, connectivity, environment):
+    """
+    Initialize the model with custom landscapes.
+
+    This function takes a parameter dictionary and three custom landscape matrices,
+    initializes a Geonomics model with these parameters, and runs a burn-in period.
+
+    Args:
+        params (dict): A dictionary of model parameters.
+        population_size (numpy.ndarray): A 2D array representing the population size landscape.
+        connectivity (numpy.ndarray): A 2D array representing the connectivity landscape.
+        environment (numpy.ndarray): A 2D array representing the environmental landscape.
+
+    Returns:
+        gnx.Model: An initialized Geonomics model.
+    """
     # Add our custom matrices to the geonomics parameters
     params = set_landscapes(params, population_size, connectivity, environment)
     # Make our params dict into a proper Geonomics ParamsDict object
@@ -195,6 +267,16 @@ def init_mod(params, population_size, connectivity, environment):
 
 # function for running and plotting genetic PCA
 def plot_PCA(mod, ax=None):
+    """
+    Plot the genetic Principal Component Analysis (PCA) of the model.
+
+    Args:
+        mod (gnx.Model): A Geonomics model object.
+        ax (matplotlib.axes.Axes, optional): An axes object to plot on. If None, a new figure is created.
+
+    Returns:
+        None: This function displays the plot but does not return any value.
+    """
     from copy import deepcopy
     from sklearn.decomposition import PCA
     figsize = 6
@@ -212,6 +294,18 @@ def plot_PCA(mod, ax=None):
 
 # function for running and plotting genetic PCA
 def map_PCA(mod, lyr_num=0, mask=True, ax=None):
+    """
+    Map the genetic Principal Component Analysis (PCA) results onto the landscape.
+
+    Args:
+        mod (gnx.Model): A Geonomics model object.
+        lyr_num (int, optional): The layer number to use as background. Default is 0.
+        mask (bool, optional): Whether to mask out areas with no individuals. Default is True.
+        ax (matplotlib.axes.Axes, optional): An axes object to plot on. If None, a new figure is created.
+
+    Returns:
+        None: This function displays the plot but does not return any value.
+    """
     if lyr_num is None:
         lyr_num = 0
 
@@ -261,6 +355,15 @@ def map_PCA(mod, lyr_num=0, mask=True, ax=None):
 
 # Combined function for plotting PCA and PCA map
 def plot_pca(mod):
+    """
+    Plot both the genetic PCA and its mapping on the landscape.
+
+    Args:
+        mod (gnx.Model): A Geonomics model object.
+
+    Returns:
+        None: This function displays the plot but does not return any value.
+    """
     # Create a figure and two subplots
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
 
@@ -276,6 +379,16 @@ def plot_pca(mod):
 
 # Function for plotting heterozygosity
 def plot_popgen(mod, lyr_num=None):
+    """
+    Plot population genetics information including PCA, PCA map, heterozygosity, and phenotype.
+
+    Args:
+        mod (gnx.Model): A Geonomics model object.
+        lyr_num (tuple of int, optional): Layer numbers to use for each plot. Default is (0, 1, 2).
+
+    Returns:
+        None: This function displays the plot but does not return any value.
+    """
 
     if lyr_num is None:
         lyr_num = (0, 1, 2)
@@ -320,12 +433,23 @@ def plot_popgen(mod, lyr_num=None):
 
 # Function for plotting genetic diversity
 def plot_heterozygosity(mod, lyr_num=0, ax=None):
+    """
+    Plot the heterozygosity of individuals on the landscape.
+
+    Args:
+        mod (gnx.Model): A Geonomics model object.
+        lyr_num (int, optional): The layer number to use as background. Default is 0.
+        ax (matplotlib.axes.Axes, optional): An axes object to plot on. If None, a new figure is created.
+
+    Returns:
+        None: This function displays the plot but does not return any value.
+    """
     if lyr_num is None:
         lyr_num = 0
 
     # Calculate heterozygosity
     genotypes = mod.comm[0]._get_genotypes()
-    heterozygosity = calculate_heterozygosity(genotypes)
+    heterozygosity = _calculate_heterozygosity(genotypes)
 
     # Get the x and y coordinates of each individual
     xs = mod.comm[0]._get_x()
@@ -364,7 +488,9 @@ def plot_heterozygosity(mod, lyr_num=0, ax=None):
     ax.set_yticks([])
 
 # Calculate heterozygosity for individuals
-def calculate_heterozygosity(genotypes):
+
+def _calculate_heterozygosity(genotypes):
+    """Internal helper function to calculate heterozygosity."""
     # Count the number of heterozygous loci for each individual
     heterozygous_loci = np.sum(genotypes[:, :, 0] != genotypes[:, :, 1], axis=1)
 
@@ -375,6 +501,18 @@ def calculate_heterozygosity(genotypes):
 
 # Plot the phenotype of a trait
 def plot_phenotype(mod, trait=0, lyr_num=2, ax=None):
+    """
+    Plot the phenotype of a trait on the landscape.
+
+    Args:
+        mod (gnx.Model): A Geonomics model object.
+        trait (int, optional): The trait number to plot. Default is 0.
+        lyr_num (int, optional): The layer number to use as background. Default is 2.
+        ax (matplotlib.axes.Axes, optional): An axes object to plot on. If None, a new figure is created.
+
+    Returns:
+        None: This function displays the plot but does not return any value.
+    """
     if lyr_num is None:
         lyr_num = 2
 
@@ -418,6 +556,15 @@ def plot_phenotype(mod, trait=0, lyr_num=2, ax=None):
 
 # Plot the landscape models (default gnx plotting)
 def plot_model(mod):
+    """
+    Plot the model landscapes using default Geonomics plotting.
+
+    Args:
+        mod (gnx.Model): A Geonomics model object.
+
+    Returns:
+        None: This function displays the plot but does not return any value.
+    """
     # Create a figure
     fig = plt.figure()
 
