@@ -8,7 +8,8 @@
     "python.defaultInterpreterPath": "/opt/conda/bin/python",
     "jupyter.interactiveWindowMode": "perFile",
     "jupyter.askForKernelRestart": false,
-    "jupyter.enablePlotViewer": true
+    "jupyter.enablePlotViewer": true,
+    "editor.wordWrap": "on"
   },
   "features": {
     "ghcr.io/devcontainers/features/desktop-lite:1": {}
