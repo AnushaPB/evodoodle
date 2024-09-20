@@ -5,25 +5,7 @@ Draw your own custom landscapes and watch as your species evolves across them! E
 
 # Setup
 
-Evodoodle can either be run locally on your own computer or right in your browser using GitHub Codespaces.
-
-## Running evodoodle on your own computer
-
-First, clone or download this repository by clicking the green CODE button. Once inside the evodoodle directory, you can then use the [evodoodle.yml](evodoodle.yml) file to set-up a conda environment and install the required packages
-
-```bash
-conda env create -f evodoodle.yml
-conda activate evodoodle
-```
-
-You can also manually install the required packages:
-```bash
-pip install numpy
-pip install matplotlib
-pip install seaborn
-pip install geonomics
-pip install pygame
-```
+Evodoodle can be run right in your browser using GitHub Codespaces or you can install it locally on your own computer.
 
 ## Running evodoodle in GitHub Codespaces
 
@@ -44,6 +26,31 @@ GitHub codespaces by default uses Visual Studio Code, a popular open-source code
 
 You can download files from your codespace by right-clicking on the file in the Explorer panel and clicking `Download...` and you can upload files by right-clicking in the Explorer panel and selecting `Upload...`.
 
+## Running evodoodle on your own computer
+
+First, clone or download this repository by clicking the green CODE button. Once inside the evodoodle directory, you can then use the [evodoodle.yml](evodoodle.yml) file to set-up a conda environment and install the required packages
+
+```bash
+conda env create -f evodoodle.yml
+conda activate evodoodle
+```
+
+You can also manually install the required packages:
+```bash
+pip install numpy
+pip install matplotlib
+pip install seaborn
+pip install geonomics
+pip install pygame
+pip install pandas
+pip install geopandas
+pip install scipy
+pip install scikit-learn
+pip install statsmodels
+pip install shapely
+pip install bitarray
+pip install rasterio
+```
 # Quick start
 
 To start evodoodle, simply run the following code. Whenever `draw_landscape()` is run a pop-up will appear that allows you to draw on a landscape. Once you have drawn your landscape, click `SAVE` and the code will continue:
