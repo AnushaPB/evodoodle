@@ -3,7 +3,7 @@
   "image": "ghcr.io/anushapb/evodoodle:latest",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
-    "jupyter.notebookFileRoot": "/workspaces/evodoodle",
+    "jupyter.notebookFileRoot": "/workspaces",
     "python.pythonPath": "/opt/conda/bin/python",
     "python.defaultInterpreterPath": "/opt/conda/bin/python",
     "jupyter.interactiveWindowMode": "perFile",
@@ -20,7 +20,7 @@
     }
   },
   "runArgs": ["--init", "--shm-size=1g"],
-  "postCreateCommand": "git clone https://github.com/your-username/your-repository.git /workspaces",
+  "postCreateCommand": "pip install -e .",
   "extensions": [
     "ms-python.python",
     "ms-toolsai.jupyter"
