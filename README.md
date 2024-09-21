@@ -9,12 +9,14 @@ Evodoodle can either be run locally on your own computer or right in your browse
 
 ## Running evodoodle on your own computer
 
-Evodoodle can be installed from GitHub:
+Evodoodle relies on several geospatial libraries that must be installed first (GEOS, GDAL, and PROJ). Once they are installed, you can install evodoodle from GitHub:
+
 ```python
 pip install git+https://github.com/AnushaPB/evodoodle.git
 ```
 
-Evodoodle has several dependencies which can be installed using pip (below) or your package manager of choice: 
+Evodoodle has requires several other python packages which can be installed using pip or your package manager of choice: 
+
 ```python
 pip install bitarray
 pip install geopandas
