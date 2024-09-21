@@ -35,3 +35,5 @@ mod.walk(200)
 # %%
 # Plot the results
 evo.plot_popgen(mod)
+
+# %%
