@@ -9,20 +9,28 @@ Evodoodle can either be run locally on your own computer or right in your browse
 
 ## Running evodoodle on your own computer
 
-First, clone or download this repository by clicking the green CODE button. Once inside the evodoodle directory, you can then use the [evodoodle.yml](evodoodle.yml) file to set-up a conda environment and install the required packages
-
-```bash
-conda env create -f evodoodle.yml
-conda activate evodoodle
+Evodoodle can be installed from GitHub:
+```python
+pip install git+https://github.com/AnushaPB/evodoodle.git
 ```
 
-You can also manually install the required packages:
-```bash
-pip install numpy
-pip install matplotlib
-pip install seaborn
+Evodoodle has several dependencies which can be installed using pip (below) or your package manager of choice: 
+```python
+pip install bitarray
+pip install geopandas
 pip install geonomics
+pip install matplotlib
+pip install msprime
+pip install numpy
+pip install nlmpy
+pip install pandas
 pip install pygame
+pip install rasterio
+pip install scikit-learn
+pip install scipy
+pip install seaborn
+pip install shapely
+pip install statsmodels
 ```
 
 ## Running evodoodle in GitHub Codespaces
