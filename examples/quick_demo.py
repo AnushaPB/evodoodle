@@ -6,13 +6,6 @@ import geonomics as gnx
 import evodoodle as evo
 import geonomics as gnx
 
-# Import example parameters
-# %%
-import sys
-import os
-sys.path.append(os.path.dirname(__file__))
-from gnx_params import params
-
 # %%
 # Draw landscapes
 population_size = evo.draw_landscape(d = 10)
@@ -26,6 +19,10 @@ environment = evo.draw_landscape(d = 10)
 # %%
 # Plot the landscapes
 evo.plot_landscapes(population_size, connectivity, environment)
+
+# %% 
+# Load example parameters dictionary
+params = evo.example_params()
 
 # %%
 # Start the model
