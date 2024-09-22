@@ -54,4 +54,5 @@ stats = {
 
 # %%
 # Plot the statistics for both models
-plot_multistats(stats)
+evo.plot_multistats(stats)
+# %%
