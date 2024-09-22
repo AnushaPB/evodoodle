@@ -1,18 +1,29 @@
 {
+  "name": "Evodoodle Container",
   "image": "ghcr.io/anushapb/evodoodle:latest",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
-    "jupyter.notebookFileRoot": "/workspace" // Set the root directory for Jupyter notebooks
+    "jupyter.notebookFileRoot": "/workspaces",
+    "python.pythonPath": "/opt/conda/bin/python",
+    "python.defaultInterpreterPath": "/opt/conda/bin/python",
+    "jupyter.interactiveWindowMode": "perFile",
+    "jupyter.askForKernelRestart": false,
+    "jupyter.enablePlotViewer": true,
+    "editor.wordWrap": "on"
   },
-  "workspaceFolder": "/workspace",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+  "forwardPorts": [6080],
+  "portsAttributes": {
+    "6080": {
+      "label": "desktop"
+    }
+  },
+  "runArgs": ["--init", "--shm-size=1g"],
+  "postCreateCommand": "pip install -e .",
   "extensions": [
     "ms-python.python",
     "ms-toolsai.jupyter"
-  ],
-  "workingDir": "/workspace",
-  "runArgs": [
-    "-e", "DISPLAY=unix${DISPLAY}",
-    "-v", "/tmp/.X11-unix:/tmp/.X11-unix"
   ]
 }
