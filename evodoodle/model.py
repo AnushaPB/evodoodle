@@ -12,6 +12,30 @@ import matplotlib.gridspec as gridspec
 import geonomics as gnx
 import pygame
 
+# Update the parameters with the custom landscapes
+def set_landscapes(params, population_size, connectivity, environment):    
+    """
+    Update the parameters with custom landscapes.
+
+    This function takes a parameter dictionary and three custom landscape matrices,
+    and updates the parameter dictionary with these landscapes.
+
+    Args:
+        params (dict): A dictionary of model parameters.
+        population_size (numpy.ndarray): A 2D array representing the population size landscape.
+        connectivity (numpy.ndarray): A 2D array representing the connectivity landscape.
+        environment (numpy.ndarray): A 2D array representing the environmental landscape.
+
+    Returns:
+        dict: The updated parameter dictionary.
+    """
+    params['landscape']['main']['dim'] = population_size.shape
+    params['landscape']['layers']['population_size']['init']['defined']['rast'] = population_size
+    params['landscape']['layers']['connectivity']['init']['defined']['rast'] = connectivity
+    params['landscape']['layers']['environment']['init']['defined']['rast'] = environment
+    return(params)
+
+
 # Initialize the model with the custom landscapes
 def init_mod(params, population_size, connectivity, environment):
     """
