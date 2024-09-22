@@ -514,9 +514,9 @@ def _get_stats(mod):
         - 'Time': Current time point.
     """
     spp = mod.comm[0]
-    Nt = gnxstats._calc_Nt(spp)
-    het = gnxstats._calc_het(spp, mean=True)
-    mean_fit = gnxstats._calc_mean_fitness(spp)
+    Nt = _calc_Nt(spp)
+    het = _calc_het(spp, mean=True)
+    mean_fit = _calc_mean_fitness(spp)
     t = spp.t
 
     update_stats = {
