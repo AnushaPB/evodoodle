@@ -1,0 +1,15 @@
+bitarray
+geopandas
+geonomics
+matplotlib
+msprime
+numpy
+nlmpy
+pandas
+pygame
+rasterio
+scikit-learn
+scipy
+seaborn
+shapely
+statsmodels

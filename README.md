@@ -5,7 +5,7 @@ Draw your own custom landscapes and watch as your species evolves across them! E
 
 # Setup
 
-Evodoodle can be run right in your browser using GitHub Codespaces or you can install it locally on your own computer.
+Evodoodle can either be run locally on your own computer or right in your browser using GitHub Codespaces.
 
 ## Running evodoodle in GitHub Codespaces
 
@@ -28,29 +28,32 @@ You can download files from your codespace by right-clicking on the file in the 
 
 ## Running evodoodle on your own computer
 
-First, clone or download this repository by clicking the green CODE button. Once inside the evodoodle directory, you can then use the [evodoodle.yml](evodoodle.yml) file to set-up a conda environment and install the required packages
+Evodoodle relies on several geospatial libraries that must be installed first (GEOS, GDAL, and PROJ). Once they are installed, you can install evodoodle from GitHub:
 
-```bash
-conda env create -f evodoodle.yml
-conda activate evodoodle
+```python
+pip install git+https://github.com/AnushaPB/evodoodle.git
 ```
 
-You can also manually install the required packages:
-```bash
-pip install numpy
-pip install matplotlib
-pip install seaborn
-pip install geonomics
-pip install pygame
-pip install pandas
-pip install geopandas
-pip install scipy
-pip install scikit-learn
-pip install statsmodels
-pip install shapely
+Evodoodle has requires several other python packages which can be installed using pip or your package manager of choice: 
+
+```python
 pip install bitarray
+pip install geopandas
+pip install geonomics
+pip install matplotlib
+pip install msprime
+pip install numpy
+pip install nlmpy
+pip install pandas
+pip install pygame
 pip install rasterio
+pip install scikit-learn
+pip install scipy
+pip install seaborn
+pip install shapely
+pip install statsmodels
 ```
+
 # Quick start
 
 To start evodoodle, simply run the following code. Whenever `draw_landscape()` is run a pop-up will appear that allows you to draw on a landscape. Once you have drawn your landscape, click `SAVE` and the code will continue:
