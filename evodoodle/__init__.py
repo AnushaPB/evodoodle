@@ -1,14 +1,8 @@
-"""EvoDoodle: A package for evolutionary landscape modeling and visualization."""
+"""Evodoodle: "A doodling game for understanding evolution across space"""
 
-from .evodoodle import (
-    draw_landscape, edit_landscape, set_landscapes, init_mod, plot_landscapes,
-    plot_PCA, map_PCA, plot_pca, plot_popgen, plot_heterozygosity, plot_phenotype, plot_model, example_params
-)
+from .draw import *
+from .params import *
+from .model import *
+from .stats import *
 
-__all__ = [
-    'draw_landscape', 'edit_landscape', 'set_landscapes', 'init_mod',
-    'plot_landscapes', 'plot_PCA', 'map_PCA', 'plot_pca', 'plot_popgen',
-    'plot_heterozygosity', 'plot_phenotype', 'plot_model', 'example_params'
-]
-
-__version__ = "0.0.0"
+__version__ = "1.0.0"
