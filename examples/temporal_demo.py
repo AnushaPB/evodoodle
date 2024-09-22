@@ -30,6 +30,7 @@ params = evo.example_params()
 
 # %%
 # Start the model
+params['comm']['species']['spp_0']['movement']['movement_distance_distr_param1'] = 0.25
 mod = evo.init_mod(params, population_size, connectivity, environment)
 
 # %%
@@ -41,18 +42,24 @@ evo.plot_stats(stats)
 
 # %%
 # Run another model for comparison with a different population size
-params['comm']['species']['spp_0']['init']['K_factor'] = 2
+params['comm']['species']['spp_0']['movement']['movement_distance_distr_param1'] = 1
 mod2 = evo.init_mod(params, population_size, connectivity, environment)
 stats2 = evo.stats_walk(mod2, t=200, inc=10)
 
 #%%
 # Create a dictionary with your two models
-stats = {
-    'Model 1': stats,
-    'Model 2': stats2
+combo_stats = {
+    'Model 1 (Low movement)': stats,
+    'Model 2 (High movement)': stats2
 }
+
 
 # %%
 # Plot the statistics for both models
-evo.plot_multistats(stats)
+evo.plot_multistats(combo_stats)
+
 # %%
+evo.plot_phenotype(mod)
+
+# %%
+evo.plot_phenotype(mod2)
