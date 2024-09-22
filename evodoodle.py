@@ -522,7 +522,7 @@ def edit_landscapes(population_size, connectivity, environment, binary=False):
     return population_size, connectivity, environment
 
 
-# STATS ------------------------------------------------------------------------------
+# NEW STATS ------------------------------------------------------------------------------
 import matplotlib.pyplot as plt
 import numpy as np
 import stats as gnxstats
