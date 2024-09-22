@@ -1,11 +1,14 @@
 
+"""
+Looking at evolution across space over time
+"""
+    
 # %%
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns 
 import geonomics as gnx
 import evodoodle as evo
-import geonomics as gnx
 
 # %%
 # Draw landscapes
