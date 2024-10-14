@@ -39,7 +39,7 @@ RUN micromamba install -y -n base -c conda-forge msprime matplotlib seaborn geop
 
 # Activate the base environment and install additional Python packages using pip
 RUN echo "micromamba activate base" >> ~/.bashrc && \
-    /bin/bash -c "source ~/.bashrc && pip install --upgrade NLMpy geonomics"
+    /bin/bash -c "source ~/.bashrc && pip install --upgrade NLMpy numba geonomics"
 
 # Expose port 8888 for Jupyter Notebook
 EXPOSE 8888
