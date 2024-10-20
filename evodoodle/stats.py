@@ -438,6 +438,60 @@ def _calc_mean_fitness(spp):
 
 # NEW STATS ------------------------------------------------------------------------------
 
+class StatsHandler:
+    """
+    Handles evolution model statistics collection and management.
+    Integrates with existing stats_walk functionality while allowing for
+    continuous statistics collection across multiple walks.
+    """
+    def __init__(self):
+        self.stats = {
+            'Nt': [],
+            'Heterozygosity': [],
+            'Mean Fitness': [],
+            'Time': []
+        }
+        self.total_steps = 0
+    
+    def walk(self, mod, t=100, inc=10):
+        """
+        Run the model and collect statistics, integrated with existing stats_walk function.
+        
+        Parameters:
+        mod (object): Geonomics model object
+        t (int, optional): Number of time steps to simulate. Default is 100.
+        inc (int, optional): Increment between statistics updates. Default is 10.
+        
+        Returns:
+        dict: The complete accumulated statistics
+        """
+        new_stats = stats_walk(mod, t=t, inc=inc)
+        self.add_stats(new_stats)
+        return self.stats
+    
+    def add_stats(self, new_stats):
+        """Add new statistics to the existing collection."""
+        for key in self.stats:
+            self.stats[key].extend(new_stats[key])
+        self.total_steps += len(new_stats['Time'])
+    
+    def plot(self):
+        """Plot all statistics using the existing plotting function."""
+        plot_stats(self.stats)
+    
+    def plot_fitness(self):
+        """Plot only the fitness data using the fitness-specific plotting function."""
+        plot_fitness(self.stats)
+    
+    @property
+    def get_stats(self):
+        """Get the current statistics dictionary."""
+        return self.stats
+
+def stats_handler():
+    """Factory function to create a new StatsHandler instance."""
+    return StatsHandler()
+
 def stats_walk(mod, t=100, inc=10):
     """
     Collects statistical data over time while walking a Geonomics model
@@ -448,16 +502,8 @@ def stats_walk(mod, t=100, inc=10):
     inc (int, optional): The increment of time steps between each statistics update. Default is 10.
 
     Returns:
-    dict: A dictionary containing the following keys:
-        - 'Nt': A list of population sizes at each time step.
-        - 'Heterozygosity': A list of heterozygosity values at each time step.
-        - 'Mean Fitness': A list of mean fitness values at each time step.
-        - 'Time': A list of time points at which statistics were collected.
-
-    The function initializes a statistics dictionary, performs an initial calculation, and then iterates
-    through the specified number of time steps, updating the statistics dictionary at each increment.
+    dict: A dictionary containing statistical data
     """
-    # Initialize stats dictionary
     stats_dict = {
         'Nt': [],
         'Heterozygosity': [],
@@ -465,54 +511,25 @@ def stats_walk(mod, t=100, inc=10):
         'Time': []
     }
 
-    # Perform initial calculation
     _update_stats(mod, stats_dict)
     
-    # Calculate how many iterations to run
     its = t // inc
     
-    # Walk and update stats
-    for _ in range(its):  # Adjust the range as needed
+    for _ in range(its):
         mod.walk(inc)
         _update_stats(mod, stats_dict)
 
-    # Now `stats_dict` contains the updated statistics after each walk
     return stats_dict
 
 def _update_stats(mod, stats_dict):
-    """
-    Updates the statistics dictionary with new statistics from the model.
-
-    Parameters:
-    mod (object): The model object from which to retrieve statistics.
-    stats_dict (dict): The dictionary to update with new statistics. The keys should include:
-        - 'Nt': List of population sizes.
-        - 'Heterozygosity': List of heterozygosity values.
-        - 'Mean Fitness': List of mean fitness values.
-        - 'Time': List of time points.
-
-    Returns:
-    dict: The updated statistics dictionary.
-    """
+    """Updates the statistics dictionary with new statistics from the model."""
     new_stats = _get_stats(mod)
     for key, value in new_stats.items():
         stats_dict[key].append(value)
     return stats_dict
 
 def _get_stats(mod):
-    """
-    Retrieves the current statistics from the model.
-
-    Parameters:
-    mod (object): The model object from which to retrieve statistics.
-
-    Returns:
-    dict: A dictionary containing the current statistics with the following keys:
-        - 'Nt': Current population size.
-        - 'Heterozygosity': Current heterozygosity value.
-        - 'Mean Fitness': Current mean fitness value.
-        - 'Time': Current time point.
-    """
+    """Retrieves the current statistics from the model."""
     spp = mod.comm[0]
     Nt = _calc_Nt(spp)
     het = _calc_het(spp, mean=True)
@@ -528,6 +545,33 @@ def _get_stats(mod):
     
     return update_stats
 
+def plot_stats(stats):
+    """Plots all statistical data over time."""
+    time = stats['Time']
+    nt = stats['Nt']
+    het = stats['Heterozygosity']
+    mean_fit = stats['Mean Fitness']
+
+    fig, axs = plt.subplots(3, 1, figsize=(10, 15))
+
+    axs[0].plot(time, nt, marker='o', linestyle='-', color='b')
+    axs[0].set_title('Nt over Time')
+    axs[0].set_xlabel('Time')
+    axs[0].set_ylabel('Nt')
+
+    axs[1].plot(time, het, marker='o', linestyle='-', color='g')
+    axs[1].set_title('Heterozygosity over Time')
+    axs[1].set_xlabel('Time')
+    axs[1].set_ylabel('Heterozygosity')
+
+    axs[2].plot(time, mean_fit, marker='o', linestyle='-', color='r')
+    axs[2].set_title('Mean Fitness over Time')
+    axs[2].set_xlabel('Time')
+    axs[2].set_ylabel('Mean Fitness')
+
+    plt.tight_layout()
+    plt.show()
+
 def plot_fitness(stats):
     """
     Plots mean fitness over time.
@@ -538,119 +582,42 @@ def plot_fitness(stats):
         - 'Mean Fitness': A list or array of mean fitness values corresponding to the time points.
     or a dictionary of dictionaries with the same keys.
     """
-    # Create a subplot
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(8, 3))
 
-    # Check if stats is a dictionary of dictionaries
     if all(isinstance(value, dict) for value in stats.values()):
-        # Loop through each stats dictionary and its label
+        # Multiple stats dictionaries
         for label, single_stats in stats.items():
-            # Extract data
             time = single_stats['Time']
             mean_fit = single_stats['Mean Fitness']
-
-            # Plot Mean Fitness over time
             ax.plot(time, mean_fit, marker='o', linestyle='-', label=label)
     else:
-        # Extract data
+        # Single stats dictionary
         time = stats['Time']
         mean_fit = stats['Mean Fitness']
-
-        # Plot Mean Fitness over time
         ax.plot(time, mean_fit, marker='o', linestyle='-', label='Mean Fitness')
 
-    # Set titles and labels
     ax.set_title('Mean Fitness over Time')
     ax.set_xlabel('Time')
     ax.set_ylabel('Mean Fitness')
     ax.legend()
 
-    # Adjust layout
     plt.tight_layout()
-
-    # Show plots
-    plt.show()
-    
-def plot_stats(stats):
-    """
-    Plots statistical data over time.
-
-    Parameters:
-    stats (dict): A dictionary containing the following keys:
-        - 'Time': A list or array of time points.
-        - 'Nt': A list or array of population sizes corresponding to the time points.
-        - 'Heterozygosity': A list or array of heterozygosity values corresponding to the time points.
-        - 'Mean Fitness': A list or array of mean fitness values corresponding to the time points.
-
-    The function creates three subplots:
-        1. Nt over Time
-        2. Heterozygosity over Time
-        3. Mean Fitness over Time
-
-    Each subplot shows the respective data points with markers and lines, and includes titles and axis labels.
-    """
-    # Extract data
-    time = stats['Time']
-    nt = stats['Nt']
-    het = stats['Heterozygosity']
-    mean_fit = stats['Mean Fitness']
-
-    # Create subplots
-    fig, axs = plt.subplots(3, 1, figsize=(10, 15))
-
-    # Plot Nt over time
-    axs[0].plot(time, nt, marker='o', linestyle='-', color='b')
-    axs[0].set_title('Nt over Time')
-    axs[0].set_xlabel('Time')
-    axs[0].set_ylabel('Nt')
-
-    # Plot Heterozygosity over time
-    axs[1].plot(time, het, marker='o', linestyle='-', color='g')
-    axs[1].set_title('Heterozygosity over Time')
-    axs[1].set_xlabel('Time')
-    axs[1].set_ylabel('Heterozygosity')
-
-    # Plot Mean Fitness over time
-    axs[2].plot(time, mean_fit, marker='o', linestyle='-', color='r')
-    axs[2].set_title('Mean Fitness over Time')
-    axs[2].set_xlabel('Time')
-    axs[2].set_ylabel('Mean Fitness')
-
-    # Adjust layout
-    plt.tight_layout()
-
-    # Show plots
     plt.show()
 
 def plot_multistats(multiple_stats):
-    """
-    Plots multiple statistics dictionaries on the same set of subplots.
-    
-    Parameters:
-    multiple_stats (dict): A dictionary of statistics dictionaries. 
-                           Keys are labels for the lines, values are stats dictionaries.
-    """
-    # Create subplots
+    """Plots multiple statistics dictionaries on the same set of subplots."""
     fig, axs = plt.subplots(3, 1, figsize=(10, 15))
 
-    # Loop through each stats dictionary and its label
     for label, stats in multiple_stats.items():
-        # Extract data
         time = stats['Time']
         nt = stats['Nt']
         het = stats['Heterozygosity']
         mean_fit = stats['Mean Fitness']
 
-        # Plot Nt over time
         axs[0].plot(time, nt, marker='o', linestyle='-', label=label)
-        
-        # Plot Heterozygosity over time
         axs[1].plot(time, het, marker='o', linestyle='-', label=label)
-        
-        # Plot Mean Fitness over time
         axs[2].plot(time, mean_fit, marker='o', linestyle='-', label=label)
 
-    # Set titles and labels
     axs[0].set_title('Nt over Time')
     axs[0].set_xlabel('Time')
     axs[0].set_ylabel('Nt')
@@ -666,8 +633,5 @@ def plot_multistats(multiple_stats):
     axs[2].set_ylabel('Mean Fitness')
     axs[2].legend()
 
-    # Adjust layout
     plt.tight_layout()
-
-    # Show plots
     plt.show()
