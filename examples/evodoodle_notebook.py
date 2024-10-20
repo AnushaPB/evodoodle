@@ -16,7 +16,7 @@ import evodoodle as evo
 # Draw your landscape carrying capacity
 # When you run this chunk a pop-up will appear where you can draw on your own landscape
 # Note: d sets the dimensions of your square landscape in terms of the number of cells
-population_size = evo.draw_landscape(d = 10)
+carrying_capacity = evo.draw_landscape(d = 10)
 
 # %% 
 # Draw your landscape connectivity
@@ -28,7 +28,7 @@ environment = evo.draw_landscape(d = 10)
 
 # %% 
 # You can plot all your landscapes using plot_landscapes()
-evo.plot_landscapes(population_size, connectivity, environment)
+evo.plot_landscapes(carrying_capacity, connectivity, environment)
 
 # %%
 # If you want to change something, you can edit your landscapes using the edit_landscape() function
@@ -36,12 +36,12 @@ environment = evo.edit_landscape(environment)
 
 # %% 
 # Finally, you can optionally save your landscapes
-np.savetxt('population_size.csv', population_size, delimiter=',')
+np.savetxt('carrying_capacity.csv', carrying_capacity, delimiter=',')
 np.savetxt('connectivity.csv', connectivity, delimiter=',')
 np.savetxt('environment.csv', environment, delimiter=',')
 
 # Uncomment these lines to read in landscapes
-#population_size = np.loadtxt('population_size.csv', delimiter=',')
+#carrying_capacity = np.loadtxt('carrying_capacity.csv', delimiter=',')
 #connectivity = np.loadtxt('connectivity.csv', delimiter=',')
 #environment = np.loadtxt('environment.csv', delimiter=',')
 
@@ -67,7 +67,7 @@ params = evo.example_params()
 
 # %%
 # Start model
-mod = evo.init_mod(params, population_size, connectivity, environment)
+mod = evo.init_mod(params, carrying_capacity, connectivity, environment)
 
 # %%
 # Plot initial model (no selection has occurred yet)

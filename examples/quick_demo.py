@@ -13,7 +13,7 @@ import geonomics as gnx
 
 # %%
 # Draw landscapes
-population_size = evo.draw_landscape(d = 10)
+carrying_capacity = evo.draw_landscape(d = 10)
 
 # %%
 connectivity = evo.draw_landscape(d = 10)
@@ -23,7 +23,7 @@ environment = evo.draw_landscape(d = 10)
 
 # %%
 # Plot the landscapes
-evo.plot_landscapes(population_size, connectivity, environment)
+evo.plot_landscapes(carrying_capacity, connectivity, environment)
 
 # %% 
 # Load example parameters dictionary
@@ -31,7 +31,7 @@ params = evo.example_params()
 
 # %%
 # Start the model
-mod = evo.init_mod(params, population_size, connectivity, environment)
+mod = evo.init_mod(params, carrying_capacity, connectivity, environment)
 
 # %%
 # Run the model for 200 steps
