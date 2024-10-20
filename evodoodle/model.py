@@ -257,9 +257,6 @@ def plot_heterozygosity(mod, lyr_num=0, ax=None):
     layer = mod.land[lyr_num].rast
 
     # Define the color maps
-    #cmaps = {0: plt.cm.RdBu.copy(), 1: plt.cm.BrBG_r.copy()}
-    #cmap = cmaps[lyr_num]
-    #cmap.set_bad(color='#8C8C8C')
     cmap = sns.cubehelix_palette(start=.5, rot=-.5, as_cmap=True, reverse=True)
 
     # If no axes object is passed, create a new figure and axes
@@ -270,7 +267,7 @@ def plot_heterozygosity(mod, lyr_num=0, ax=None):
     ax.pcolormesh(mod.land._x_cell_bds, mod.land._y_cell_bds, layer, cmap=cmap, vmax=1, vmin=0)
 
     # Create a scatter plot of individuals, colored by heterozygosity
-    scatter = ax.scatter(xs, ys, c=heterozygosity, edgecolors='black')
+    scatter = ax.scatter(xs, ys, c=heterozygosity, edgecolors='black', vmin=0, vmax=1)
 
     # Set the colorbar without a label
     plt.colorbar(scatter, ax=ax)
