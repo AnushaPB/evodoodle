@@ -528,6 +528,49 @@ def _get_stats(mod):
     
     return update_stats
 
+def plot_fitness(stats):
+    """
+    Plots mean fitness over time.
+
+    Parameters:
+    stats (dict): A dictionary containing the following keys:
+        - 'Time': A list or array of time points.
+        - 'Mean Fitness': A list or array of mean fitness values corresponding to the time points.
+    or a dictionary of dictionaries with the same keys.
+    """
+    # Create a subplot
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    # Check if stats is a dictionary of dictionaries
+    if all(isinstance(value, dict) for value in stats.values()):
+        # Loop through each stats dictionary and its label
+        for label, single_stats in stats.items():
+            # Extract data
+            time = single_stats['Time']
+            mean_fit = single_stats['Mean Fitness']
+
+            # Plot Mean Fitness over time
+            ax.plot(time, mean_fit, marker='o', linestyle='-', label=label)
+    else:
+        # Extract data
+        time = stats['Time']
+        mean_fit = stats['Mean Fitness']
+
+        # Plot Mean Fitness over time
+        ax.plot(time, mean_fit, marker='o', linestyle='-', label='Mean Fitness')
+
+    # Set titles and labels
+    ax.set_title('Mean Fitness over Time')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Mean Fitness')
+    ax.legend()
+
+    # Adjust layout
+    plt.tight_layout()
+
+    # Show plots
+    plt.show()
+    
 def plot_stats(stats):
     """
     Plots statistical data over time.
