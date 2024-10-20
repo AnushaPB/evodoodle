@@ -2,13 +2,14 @@
 """
 Looking at evolution across space over time
 """
-    
+
 # %%
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns 
 import geonomics as gnx
 import evodoodle as evo
+import geonomics as gnx
 
 # %%
 # Draw landscapes
@@ -30,36 +31,28 @@ params = evo.example_params()
 
 # %%
 # Start the model
-params['comm']['species']['spp_0']['movement']['movement_distance_distr_param1'] = 0.25
 mod = evo.init_mod(params, population_size, connectivity, environment)
 
 # %%
-# Run the model for 200 steps and collect statistics every 10 time steps
-stats = evo.stats_walk(mod, t=200, inc=10)
+# Run the model for 100 steps
+stats = evo.stats_walk(mod, t=100, inc = 10)
 
 # %%
-evo.plot_stats(stats)
+# Plot the results
+evo.plot_popgen(mod)
+evo.plot_fitness(stats)
 
 # %%
-# Run another model for comparison with a different population size
-params['comm']['species']['spp_0']['movement']['movement_distance_distr_param1'] = 1
-mod2 = evo.init_mod(params, population_size, connectivity, environment)
-stats2 = evo.stats_walk(mod2, t=200, inc=10)
+# Run the model for another 100 steps
+stats2 = evo.stats_walk(mod, t=100, inc = 10)
 
-#%%
-# Create a dictionary with your two models
-combo_stats = {
-    'Model 1 (Low movement)': stats,
-    'Model 2 (High movement)': stats2
-}
+# Initialize the combined dictionary
+combined_stats = {}
 
+# Iterate over the keys and concatenate the lists
+for key in stats:
+    combined_stats[key] = stats[key] + stats2[key]
 
-# %%
-# Plot the statistics for both models
-evo.plot_multistats(combo_stats)
+print(combined_stats)
 
-# %%
-evo.plot_phenotype(mod)
-
-# %%
-evo.plot_phenotype(mod2)
+evo.plot_fitness(combined_stats)

@@ -40,7 +40,7 @@ np.savetxt('population_size.csv', population_size, delimiter=',')
 np.savetxt('connectivity.csv', connectivity, delimiter=',')
 np.savetxt('environment.csv', environment, delimiter=',')
 
-# Read in landscapes
+# Uncomment these lines to read in landscapes
 #population_size = np.loadtxt('population_size.csv', delimiter=',')
 #connectivity = np.loadtxt('connectivity.csv', delimiter=',')
 #environment = np.loadtxt('environment.csv', delimiter=',')

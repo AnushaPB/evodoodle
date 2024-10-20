@@ -56,7 +56,7 @@ def example_params():
             'layers': {
 
     #layer name (LAYER NAMES MUST BE UNIQUE!)
-                'population_size': {
+                'carrying_capacity': {
 
             #-------------------------------------#
             #--- layer num. 0: init parameters ---#
@@ -171,7 +171,7 @@ def example_params():
                         #starting number of individs
                         'N':                500,
                         #carrying-capacity Layer name
-                        'K_layer':          'population_size',
+                        'K_layer':          'carrying_capacity',
                         
     ###########################################################################
     # CONSIDER CHANGING THIS PARAMETER                                        #
@@ -632,12 +632,12 @@ def draw_landscape_helper(d=10, drawing_matrix=None):
     return landscape
 
 # Plot the landscapes
-def plot_landscapes(population_size, connectivity, environment):
+def plot_landscapes(carrying_capacity, connectivity, environment):
     # Create a figure and a set of subplots
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(12, 4))
 
     # Set titles for each subplot
-    ax1.set_title('Population Size')
+    ax1.set_title('Carrying capacity')
     ax2.set_title('Connectivity')
     ax3.set_title('Environment')
 
@@ -645,7 +645,7 @@ def plot_landscapes(population_size, connectivity, environment):
     cmap = sns.cubehelix_palette(start=.5, rot=-.5, as_cmap=True, reverse=True)
 
     # Display the matrices
-    im1 = ax1.imshow(population_size, cmap=cmap, vmin=0, vmax=1)
+    im1 = ax1.imshow(carrying_capacity, cmap=cmap, vmin=0, vmax=1)
     im2 = ax2.imshow(connectivity, cmap=cmap, vmin=0, vmax=1)
     im3 = ax3.imshow(environment, cmap=cmap, vmin=0, vmax=1)
 
@@ -657,17 +657,17 @@ def plot_landscapes(population_size, connectivity, environment):
     plt.show()
 
 # Update the parameters with the custom landscapes
-def set_landscapes(params, population_size, connectivity, environment):    
-    params['landscape']['main']['dim'] = population_size.shape
-    params['landscape']['layers']['population_size']['init']['defined']['rast'] = population_size
+def set_landscapes(params, carrying_capacity, connectivity, environment):    
+    params['landscape']['main']['dim'] = carrying_capacity.shape
+    params['landscape']['layers']['carrying_capacity']['init']['defined']['rast'] = carrying_capacity
     params['landscape']['layers']['connectivity']['init']['defined']['rast'] = connectivity
     params['landscape']['layers']['environment']['init']['defined']['rast'] = environment
     return(params)
 
 # Initialize the model with the custom landscapes
-def init_mod(params, population_size, connectivity, environment):
+def init_mod(params, carrying_capacity, connectivity, environment):
     # Add our custom matrices to the geonomics parameters
-    params = set_landscapes(params, population_size, connectivity, environment)
+    params = set_landscapes(params, carrying_capacity, connectivity, environment)
     # Make our params dict into a proper Geonomics ParamsDict object
     params = gnx.make_params_dict(params, 'geonomics_output')
     # Then use it to make a model
@@ -910,7 +910,7 @@ def plot_model(mod):
 
     # Create the first subplot and set its title
     ax1 = fig.add_subplot(1, 3, 1)
-    ax1.set_title('Population size')
+    ax1.set_title('Carrying capacity')
     plt.sca(ax1)
     mod.plot(spp=0, lyr=0)
 
@@ -932,13 +932,13 @@ def plot_model(mod):
 # OLD IGNORE -------
 
 
-def draw_on_matrix(event, ax1, ax2, ax3, population_size, connectivity, environment, fig, im1, im2, im3, binary=False):
+def draw_on_matrix(event, ax1, ax2, ax3, carrying_capacity, connectivity, environment, fig, im1, im2, im3, binary=False):
     if event.inaxes is not None:
         # Get the x and y coordinates of the click
         x, y = int(event.xdata), int(event.ydata)
 
         # Map the axes to the corresponding matrices
-        axes_to_matrix = {ax1: population_size, ax2: connectivity, ax3: environment}
+        axes_to_matrix = {ax1: carrying_capacity, ax2: connectivity, ax3: environment}
 
         # Check if the event is in one of the axes
         if event.inaxes in axes_to_matrix:
@@ -953,7 +953,7 @@ def draw_on_matrix(event, ax1, ax2, ax3, population_size, connectivity, environm
 
             # Update the image
             if event.inaxes == ax1:
-                im1.set_data(population_size)
+                im1.set_data(carrying_capacity)
             elif event.inaxes == ax2:
                 im2.set_data(connectivity)
             elif event.inaxes == ax3:
@@ -966,16 +966,16 @@ def draw_on_matrix(event, ax1, ax2, ax3, population_size, connectivity, environm
 
 def make_landscapes(d=10, binary=False):
     # Create three dxd matrices filled with ones
-    population_size = np.ones((d, d))
+    carrying_capacity = np.ones((d, d))
     connectivity = np.ones((d, d))
     environment = np.ones((d, d))
 
     # Edit the matrices
-    population_size, connectivity, environment = edit_landscapes(population_size, connectivity, environment, binary=binary)
+    carrying_capacity, connectivity, environment = edit_landscapes(carrying_capacity, connectivity, environment, binary=binary)
 
-    return population_size, connectivity, environment
+    return carrying_capacity, connectivity, environment
 
-def edit_landscapes(population_size, connectivity, environment, binary=False):
+def edit_landscapes(carrying_capacity, connectivity, environment, binary=False):
     # Create a figure and a set of subplots
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(12, 4))
 
@@ -983,7 +983,7 @@ def edit_landscapes(population_size, connectivity, environment, binary=False):
     fig.suptitle("Click each cell to change its value", fontsize=16)
 
     # Set titles for each subplot
-    ax1.set_title('Population Size')
+    ax1.set_title('Carrying capacity')
     ax2.set_title('Connectivity')
     ax3.set_title('Environment')
 
@@ -991,16 +991,16 @@ def edit_landscapes(population_size, connectivity, environment, binary=False):
     cmap = sns.cubehelix_palette(start=.5, rot=-.5, as_cmap=True, reverse=True)
 
     # Display the matrices
-    im1 = ax1.imshow(population_size, cmap=cmap, vmin=0, vmax=1)
+    im1 = ax1.imshow(carrying_capacity, cmap=cmap, vmin=0, vmax=1)
     im2 = ax2.imshow(connectivity, cmap=cmap, vmin=0, vmax=1)
     im3 = ax3.imshow(environment, cmap=cmap, vmin=0, vmax=1)
 
     # Connect the draw function to button press events
-    fig.canvas.mpl_connect('button_press_event', lambda event: draw_on_matrix(event, ax1, ax2, ax3, population_size, connectivity, environment, fig, im1, im2, im3, binary=binary))
+    fig.canvas.mpl_connect('button_press_event', lambda event: draw_on_matrix(event, ax1, ax2, ax3, carrying_capacity, connectivity, environment, fig, im1, im2, im3, binary=binary))
 
     plt.show()
 
-    return population_size, connectivity, environment
+    return carrying_capacity, connectivity, environment
 
 
 # NEW STATS ------------------------------------------------------------------------------

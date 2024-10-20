@@ -178,12 +178,12 @@ def _draw_landscape_helper(d=10, drawing_matrix=None):
     return landscape
 
 # Plot the landscapes
-def plot_landscapes(population_size, connectivity, environment):
+def plot_landscapes(carrying_capacity, connectivity, environment):
     """
     Plot the three landscape matrices side by side.
 
     Args:
-        population_size (numpy.ndarray): A 2D array representing the population size landscape.
+        carrying_capacity (numpy.ndarray): A 2D array representing the carrying capacity landscape.
         connectivity (numpy.ndarray): A 2D array representing the connectivity landscape.
         environment (numpy.ndarray): A 2D array representing the environmental landscape.
 
@@ -194,7 +194,7 @@ def plot_landscapes(population_size, connectivity, environment):
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(12, 4))
 
     # Set titles for each subplot
-    ax1.set_title('Population Size')
+    ax1.set_title('Carrying capacity')
     ax2.set_title('Connectivity')
     ax3.set_title('Environment')
 
@@ -202,7 +202,7 @@ def plot_landscapes(population_size, connectivity, environment):
     cmap = sns.cubehelix_palette(start=.5, rot=-.5, as_cmap=True, reverse=True)
 
     # Display the matrices
-    im1 = ax1.imshow(population_size, cmap=cmap, vmin=0, vmax=1)
+    im1 = ax1.imshow(carrying_capacity, cmap=cmap, vmin=0, vmax=1)
     im2 = ax2.imshow(connectivity, cmap=cmap, vmin=0, vmax=1)
     im3 = ax3.imshow(environment, cmap=cmap, vmin=0, vmax=1)
 

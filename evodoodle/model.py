@@ -13,7 +13,7 @@ import geonomics as gnx
 import pygame
 
 # Update the parameters with the custom landscapes
-def set_landscapes(params, population_size, connectivity, environment):    
+def set_landscapes(params, carrying_capacity, connectivity, environment):    
     """
     Update the parameters with custom landscapes.
 
@@ -22,22 +22,22 @@ def set_landscapes(params, population_size, connectivity, environment):
 
     Args:
         params (dict): A dictionary of model parameters.
-        population_size (numpy.ndarray): A 2D array representing the population size landscape.
+        carrying_capacity (numpy.ndarray): A 2D array representing the carrying capacity landscape.
         connectivity (numpy.ndarray): A 2D array representing the connectivity landscape.
         environment (numpy.ndarray): A 2D array representing the environmental landscape.
 
     Returns:
         dict: The updated parameter dictionary.
     """
-    params['landscape']['main']['dim'] = population_size.shape
-    params['landscape']['layers']['population_size']['init']['defined']['rast'] = population_size
+    params['landscape']['main']['dim'] = carrying_capacity.shape
+    params['landscape']['layers']['carrying_capacity']['init']['defined']['rast'] = carrying_capacity
     params['landscape']['layers']['connectivity']['init']['defined']['rast'] = connectivity
     params['landscape']['layers']['environment']['init']['defined']['rast'] = environment
     return(params)
 
 
 # Initialize the model with the custom landscapes
-def init_mod(params, population_size, connectivity, environment):
+def init_mod(params, carrying_capacity, connectivity, environment):
     """
     Initialize the model with custom landscapes.
 
@@ -46,7 +46,7 @@ def init_mod(params, population_size, connectivity, environment):
 
     Args:
         params (dict): A dictionary of model parameters.
-        population_size (numpy.ndarray): A 2D array representing the population size landscape.
+        carrying_capacity (numpy.ndarray): A 2D array representing the carrying capacity landscape.
         connectivity (numpy.ndarray): A 2D array representing the connectivity landscape.
         environment (numpy.ndarray): A 2D array representing the environmental landscape.
 
@@ -54,7 +54,7 @@ def init_mod(params, population_size, connectivity, environment):
         gnx.Model: An initialized Geonomics model.
     """
     # Add our custom matrices to the geonomics parameters
-    params = set_landscapes(params, population_size, connectivity, environment)
+    params = set_landscapes(params, carrying_capacity, connectivity, environment)
     # Make our params dict into a proper Geonomics ParamsDict object
     params = gnx.make_params_dict(params, 'demo')
     # Then use it to make a model
@@ -365,7 +365,7 @@ def plot_model(mod):
 
     # Create the first subplot and set its title
     ax1 = fig.add_subplot(1, 3, 1)
-    ax1.set_title('Population size')
+    ax1.set_title('Carrying capacity')
     plt.sca(ax1)
     mod.plot(spp=0, lyr=0)
 
