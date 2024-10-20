@@ -230,7 +230,7 @@ def plot_popgen(mod, lyr_num=None):
     plt.show()
 
 # Function for plotting genetic diversity
-def plot_heterozygosity(mod, lyr_num=0, ax=None):
+def plot_heterozygosity(mod, lyr_num=0, ax=None, max_het=0.5, min_het=0):
     """
     Plot the heterozygosity of individuals on the landscape.
 
@@ -238,6 +238,8 @@ def plot_heterozygosity(mod, lyr_num=0, ax=None):
         mod (gnx.Model): A Geonomics model object.
         lyr_num (int, optional): The layer number to use as background. Default is 0.
         ax (matplotlib.axes.Axes, optional): An axes object to plot on. If None, a new figure is created.
+        max_het maximum value for color bar
+        min_het minimum value for color bar
 
     Returns:
         None: This function displays the plot but does not return any value.
@@ -267,7 +269,7 @@ def plot_heterozygosity(mod, lyr_num=0, ax=None):
     ax.pcolormesh(mod.land._x_cell_bds, mod.land._y_cell_bds, layer, cmap=cmap, vmax=1, vmin=0)
 
     # Create a scatter plot of individuals, colored by heterozygosity
-    scatter = ax.scatter(xs, ys, c=heterozygosity, edgecolors='black', vmin=0, vmax=1)
+    scatter = ax.scatter(xs, ys, c=heterozygosity, edgecolors='black', vmin=max_het, vmax=min_het)
 
     # Set the colorbar without a label
     plt.colorbar(scatter, ax=ax)
