@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import geonomics as gnx
 import pygame
+from .params import example_params
 
 # Update the parameters with the custom landscapes
 def set_landscapes(params, carrying_capacity, connectivity, environment):    
@@ -29,6 +30,12 @@ def set_landscapes(params, carrying_capacity, connectivity, environment):
     Returns:
         dict: The updated parameter dictionary.
     """
+    # Use the example params to overwrite the landscape parameters
+    default_params = example_params()
+    
+    params['landscape'] = default_params['landscape']
+
+    # Inpurt the custom landscapes
     params['landscape']['main']['dim'] = carrying_capacity.shape
     params['landscape']['layers']['carrying_capacity']['init']['defined']['rast'] = carrying_capacity
     params['landscape']['layers']['connectivity']['init']['defined']['rast'] = connectivity
@@ -56,7 +63,7 @@ def init_mod(params, carrying_capacity, connectivity, environment):
     # Add our custom matrices to the geonomics parameters
     params = set_landscapes(params, carrying_capacity, connectivity, environment)
     # Make our params dict into a proper Geonomics ParamsDict object
-    params = gnx.make_params_dict(params, 'demo')
+    params = gnx.make_params_dict(params, 'evodoodle')
     # Then use it to make a model
     mod = gnx.make_model(parameters=params, verbose=True)
     # Burn in the model for 10000 steps
