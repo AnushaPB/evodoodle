@@ -397,7 +397,7 @@ def example_params():
                     # sampling scheme {'all', 'random', 'point', 'transect'}
                     'scheme': 'all',
                     # when to collect data
-                    'when': 100,
+                    'when': None,
                     # whether to save current Layers when data is collected
                     'include_landscape': False,
                     # whether to include fixed loci in VCF files
