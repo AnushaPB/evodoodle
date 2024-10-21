@@ -13,35 +13,49 @@ import geonomics as gnx
 import pygame
 from .params import example_params
 
-# Update the parameters with the custom landscapes
 def set_landscapes(params, carrying_capacity, connectivity, environment):    
     """
-    Update the parameters with custom landscapes.
-
-    This function takes a parameter dictionary and three custom landscape matrices,
-    and updates the parameter dictionary with these landscapes.
-
+    Update the parameters with custom landscapes, using complete default sections
+    if key paths don't exist.
+    
     Args:
         params (dict): A dictionary of model parameters.
         carrying_capacity (numpy.ndarray): A 2D array representing the carrying capacity landscape.
         connectivity (numpy.ndarray): A 2D array representing the connectivity landscape.
         environment (numpy.ndarray): A 2D array representing the environmental landscape.
-
+    
     Returns:
         dict: The updated parameter dictionary.
     """
-    # Use the example params to overwrite the landscape parameters
+    # Get default parameters
     default_params = example_params()
     
+    # Set landscape parameters
     params['landscape'] = default_params['landscape']
-
-    # Inpurt the custom landscapes
+    
+    # Update landscape parameters
     params['landscape']['main']['dim'] = carrying_capacity.shape
     params['landscape']['layers']['carrying_capacity']['init']['defined']['rast'] = carrying_capacity
     params['landscape']['layers']['connectivity']['init']['defined']['rast'] = connectivity
     params['landscape']['layers']['environment']['init']['defined']['rast'] = environment
-    return(params)
-
+    
+    # Set K_layer
+    params['comm']['species']['spp_0']['init']['K_layer'] = 'carrying_capacity'
+    
+    # Set movement
+    if 'move_surf' not in params['comm']['species']['spp_0']['movement']:
+        params['comm']['species']['spp_0']['movement']['move_surf'] = default_params['comm']['species']['spp_0']['movement']['move_surf']
+    params['comm']['species']['spp_0']['movement']['move_surf']['layer'] = 'connectivity'
+    
+    # Set traits - use entire default structure if trait_0 doesn't exist
+    if ('traits' not in params['comm']['species']['spp_0']['gen_arch'] or
+        'trait_0' not in params['comm']['species']['spp_0']['gen_arch']['traits']):
+        params['comm']['species']['spp_0'].setdefault('gen_arch', {})['traits'] = (
+            default_params['comm']['species']['spp_0']['gen_arch']['traits']
+        )
+    params['comm']['species']['spp_0']['gen_arch']['traits']['trait_0']['layer'] = 'environment'
+    
+    return params
 
 # Initialize the model with the custom landscapes
 def init_mod(params, carrying_capacity, connectivity, environment):
@@ -63,9 +77,9 @@ def init_mod(params, carrying_capacity, connectivity, environment):
     # Add our custom matrices to the geonomics parameters
     params = set_landscapes(params, carrying_capacity, connectivity, environment)
     # Make our params dict into a proper Geonomics ParamsDict object
-    params = gnx.make_params_dict(params, 'evodoodle')
+    paramsdict = gnx.make_params_dict(params, 'evodoodle')
     # Then use it to make a model
-    mod = gnx.make_model(parameters=params, verbose=True)
+    mod = gnx.make_model(parameters=paramsdict, verbose=True)
     # Burn in the model for 10000 steps
     mod.walk(T=10000, mode='burn')
     return mod
