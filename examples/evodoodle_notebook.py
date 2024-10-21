@@ -53,6 +53,19 @@ np.savetxt('environment.csv', environment, delimiter=',')
 params = evo.example_params()
 
 # %%
+# You can also create your own Geonomics parameters file by running gnx.make_parameters_file()
+# Here we call this file "example_parameters" and it will automatically be saved to our working directory
+gnx.make_parameters_file("example_parameters")
+# You can manually edit this file to change the simulation parameters, just note that the landscape layers will be overwritten when we create our custom landscapes, so best to leave that section, and any other section related to the landscape, alone
+
+# You can then load your parameters python dictionary
+from example_parameters import params
+print(params)
+
+# But for now we will use the example parameters
+params = evo.example_params()
+
+# %%
 # Start model
 mod = evo.init_mod(params, carrying_capacity, connectivity, environment)
 
