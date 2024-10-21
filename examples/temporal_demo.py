@@ -1,6 +1,6 @@
 
 """
-Looking at evolution across space over time (Beta)
+Looking at evolution across space over time (BETA)
 """
 
 # %%
@@ -34,25 +34,44 @@ params = evo.example_params()
 mod = evo.init_mod(params, population_size, connectivity, environment)
 
 # %%
-# Run the model for 100 steps
-stats = evo.stats_walk(mod, t=100, inc = 10)
+# Initialize a statistics object to store results as you run the simulations
+stats = evo.stats_handler()
+
+# %%
+# Run the model for 100 steps, collecting stats object every 10 steps
+stats.walk(mod, t = 100, inc = 10)
 
 # %%
 # Plot the results
 evo.plot_popgen(mod)
-evo.plot_fitness(stats)
+stats.plot_fitness()
 
 # %%
-# Run the model for another 100 steps
-stats2 = evo.stats_walk(mod, t=100, inc = 10)
+# Run the model for another 100 steps and plot the results
+stats.walk(mod, t=100, inc = 10)
+evo.plot_popgen(mod)
+stats.plot_fitness()
 
-# Initialize the combined dictionary
-combined_stats = {}
+# %% 
+# Now, let's run another simulation and plot the results
+mod2 = evo.init_mod(params, population_size, connectivity, environment)
+stats2 = evo.stats_handler()
+stats2.walk(mod2, t = 200, inc = 10)
+stats2.plot_fitness()
+evo.plot_popgen(mod2)
 
-# Iterate over the keys and concatenate the lists
-for key in stats:
-    combined_stats[key] = stats[key] + stats2[key]
+# %%
+# We can also plot the fitness of the two simulations together
 
-print(combined_stats)
+# Get the stats from the two simulations
+stats1 = stats.get_stats()
+stats2 = stats2.get_stats()
 
-evo.plot_fitness(combined_stats)
+# Combine the stats into a single dictionary
+stats_combined = {
+    'model 1': stats1,
+    'model 2': stats2
+}
+
+# Plot the fitness of the two simulations together
+evo.plot_fitness(stats_combined)
