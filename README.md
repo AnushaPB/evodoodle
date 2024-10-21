@@ -72,15 +72,15 @@ from gnx_params import params
 import geonomics as gnx
 
 # Draw landscapes
-population_size = evo.draw_landscape(d = 10)
+carrrying_capacity = evo.draw_landscape(d = 10)
 connectivity = evo.draw_landscape(d = 10)
 environment = evo.draw_landscape(d = 10)
 
 # Plot the landscapes
-evo.plot_landscapes(population_size, connectivity, environment)
+evo.plot_landscapes(carrrying_capacity, connectivity, environment)
 
 # Start the model
-mod = evo.init_mod(params, population_size, connectivity, environment)
+mod = evo.init_mod(params, carrrying_capacity, connectivity, environment)
 
 # Run the model for 200 steps
 mod.walk(200)
