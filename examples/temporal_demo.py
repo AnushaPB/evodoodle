@@ -75,3 +75,4 @@ stats_combined = {
 
 # Plot the fitness of the two simulations together
 evo.plot_fitness(stats_combined)
+# %%
