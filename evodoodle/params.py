@@ -382,7 +382,7 @@ def example_params():
     #-------------#
         'model': {
             #total Model runtime (in timesteps)
-            'T':            100,
+            'T':            1000,
             #min burn-in runtime (in timesteps)
             'burn_T':       30,
             #seed number
