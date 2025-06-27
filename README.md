@@ -93,4 +93,4 @@ evo.plot_popgen(mod)
 
 <img src="images/example.png" alt="example" width="100%">
 
-For a more in-depth walkthrough and some fun challenges, check out the [evodoodle_notebook.ipynb](evodoodle_notebook.ipynb) jupyter notebook
+For a more in-depth walkthrough check out the [evodoodle_notebook.ipynb](evodoodle_notebook.ipynb) jupyter notebook or [evodoodle_notebook.py](evodoodle_notebook.py) python script. For a complete lab activity with conservation-themed challenges, check out the [evodoodle_lab.ipynb](evodoodle_lab.ipynb) jupyter notebook.
